@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<no.agens.depth.lib.DepthRendrer xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layerType="hardware"
+    >
+
+    <no.agens.depth.lib.DepthLayout
+        android:id="@+id/root_depth_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layerType="hardware">
+
+        <!-- CONTENT HERE -->
+
+    </no.agens.depth.lib.DepthLayout>
+</no.agens.depth.lib.DepthRendrer>
