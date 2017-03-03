@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 
+import com.gihub.florent37.depth.R;
 import com.github.florent37.depth.anim.animations.DepthAnimation;
 import com.github.florent37.depth.anim.animations.EnterAnimation;
 import com.github.florent37.depth.anim.animations.EnterConfiguration;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.agens.depth.lib.DepthLayout;
-import no.agens.depth.lib.R;
 
 /**
  * Created by florentchampigny on 03/03/2017.

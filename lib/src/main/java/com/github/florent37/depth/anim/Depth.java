@@ -5,20 +5,19 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.support.annotation.FloatRange;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import java.lang.ref.WeakReference;
+import com.gihub.florent37.depth.R;
 
-import no.agens.depth.lib.DepthLayout;
-import no.agens.depth.lib.R;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by florentchampigny on 02/03/2017.
  */
 
 public class Depth {
-    private static final int root_depth_layout = R.id.root_depth_layout;
     private FragmentManager fragmentManager = new FragmentManagerImpl();
 
     private DepthAnimator depthAnimator;
@@ -31,8 +30,12 @@ public class Depth {
         }
     }
 
-    public View setupFragment(/*0-20*/ float depth, /*0-20*/ float elevation, View view) {
+    public View setupFragment(@FloatRange(from = 0, to = 20) float depth, @FloatRange(from = 0, to = 20) float elevation, View view) {
         return new FragmentDepthView(view, depth, elevation);
+    }
+
+    public View setupFragment(View view) {
+        return new FragmentDepthView(view);
     }
 
     public Depth setFragmentContainer(int fragmentContainer) {

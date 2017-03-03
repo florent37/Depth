@@ -1,4 +1,4 @@
-package no.agens.depth;
+package com.github.florent37.depth.sample.fullscreen;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.github.florent37.depth.anim.Depth;
 import com.github.florent37.depth.anim.DepthProvider;
+import com.github.florent37.depth.sample.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,7 +28,7 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.depth = DepthProvider.getDepth(container);
-        return depth.setupFragment(10f, 10f, inflater.inflate(R.layout.fragment_water, container, false));
+        return depth.setupFragment(10f, 10f, inflater.inflate(R.layout.fragment_1, container, false));
     }
 
     @Override
@@ -40,12 +41,12 @@ public class Fragment1 extends Fragment {
 
     @OnClick(R.id.next)
     public void onNextClicked() {
-        ((Callback) getActivity()).changeFragment(this);
+        ((FragmentCallback) getActivity()).changeFragment(this);
     }
 
     @OnClick(R.id.open_reset)
     public void onOpenResetClicked() {
-        ((Callback) getActivity()).openResetFragment(this);
+        ((FragmentCallback) getActivity()).openResetFragment(this);
     }
 
 }

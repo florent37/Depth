@@ -1,4 +1,4 @@
-package no.agens.depth;
+package com.github.florent37.depth.sample.fullscreen;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,9 +11,9 @@ import com.github.florent37.depth.anim.DepthProvider;
 import com.github.florent37.depth.anim.animations.EnterConfiguration;
 import com.github.florent37.depth.anim.animations.ExitConfiguration;
 import com.github.florent37.depth.anim.animations.ReduceConfiguration;
+import com.github.florent37.depth.sample.R;
 
-
-public class RootActivity extends Activity implements Callback {
+public class FullScreenActivity extends Activity implements FragmentCallback {
 
     int count = 0;
     private Depth depth;

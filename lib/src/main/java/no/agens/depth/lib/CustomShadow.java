@@ -13,7 +13,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 
-import no.agens.depth.lib.R;
+import com.gihub.florent37.depth.R;
 
 /**
  * A rounded rectangle drawable which also includes a shadow around.
