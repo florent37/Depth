@@ -52,20 +52,22 @@ public class Depth {
 
         new ReduceAnimation()
                 .setDepthLayout(depthLayout)
-                .start(new AnimatorListenerAdapter() {
+                .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         fragmentManager.addFragment(activity, fragment_container, newFragment);
                         new ExitAnimation()
                                 .setDepthLayout(depthLayout)
-                                .start(new AnimatorListenerAdapter() {
+                                .setListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
                                         fragmentManager.removeFragment(activity, oldFragment);
                                     }
-                                });
+                                })
+                                .start();
                     }
-                });
+                })
+                .start();
     }
 
     public void openResetFragment(final Fragment fragment) {
@@ -73,14 +75,14 @@ public class Depth {
 
         new ReduceAnimation()
                 .setDepthLayout(depthLayout)
-                .start(new AnimatorListenerAdapter() {
+                .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         new RevertAnimation()
                                 .setDepthLayout(depthLayout)
                                 .start();
                     }
-                });
+                }).start();
     }
 
     public interface FragmentManager {

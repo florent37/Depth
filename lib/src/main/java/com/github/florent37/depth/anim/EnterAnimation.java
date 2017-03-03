@@ -27,9 +27,19 @@ public class EnterAnimation {
     private AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {};
 
     private DepthLayout depthLayout;
+    private long totalDuration;
+
+    public EnterAnimation() {
+        totalDuration = 1400l;
+    }
 
     public EnterAnimation setEndListener(AnimatorListenerAdapter listener) {
         this.listener = listener;
+        return this;
+    }
+
+    public EnterAnimation setTotalDuration(long totalDuration) {
+        this.totalDuration = totalDuration;
         return this;
     }
 
@@ -38,95 +48,101 @@ public class EnterAnimation {
         return this;
     }
 
-    private void introAnimate(final DepthLayout target, final float moveY, final float customElevation, int subtractDelay) {
+    private void introAnimate(final DepthLayout target) {
         final float density = target.getResources().getDisplayMetrics().density;
+
+        final float initialRotationX = TransitionHelper.TARGET_ROTATION_X;
+        final float initialRotationZ = TransitionHelper.TARGET_ROTATION;
+        final float initialScale = TransitionHelper.TARGET_SCALE;
+        final float initialElevation = 30f * density;
 
         target.setPivotY(TransitionHelper.getDistanceToCenter(target));
         target.setPivotX(TransitionHelper.getDistanceToCenterX(target));
         target.setCameraDistance(10000 * density);
 
+        final float finalRotationX = target.getRotationX();
+        final float finalRotationZ = target.getRotation();
+        final float finalTranslationY = target.getTranslationY();
+        final float finalTranslationX = target.getTranslationX();
+        final float finalScaleY = target.getScaleY();
+        final float finalScaleX = target.getScaleX();
+        final float finalElevation = target.getCustomShadowElevation();
+
+        final long duration = (long) (totalDuration * 0.714f);
+        final long firstTranslationDuration = (long) (duration * 0.8f);
+        final long translations_startDelay = (long) (duration * 0.7f);
+
+        final long fisrtdelay = (long) (duration * 0.3f); // ?
+        final long scale_shadow_rotationX_startDelay = translations_startDelay + fisrtdelay;
+        final long rotationZ_startDelay = fisrtdelay;
+        final long rotationZ_duration = totalDuration;
 
         { //initial position & restore
             final int initialTranslationY = target.getResources().getDisplayMetrics().heightPixels;
             final int initialTranslationX = -target.getResources().getDisplayMetrics().widthPixels;
-            final float finalTranslationY = -moveY * density;
-            final int finalTranslationX = 0;
 
             target.setTranslationY(initialTranslationY);
             final ObjectAnimator translationY2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, initialTranslationY, finalTranslationY);
-            translationY2.setDuration(800);
+            translationY2.setDuration(firstTranslationDuration);
             translationY2.setInterpolator(new ExpoOut());
-            translationY2.setStartDelay(700 + subtractDelay);
+            translationY2.setStartDelay(translations_startDelay);
             translationY2.start();
 
             target.setTranslationX(initialTranslationX);
             final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, initialTranslationX, finalTranslationX);
-            translationX2.setDuration(800);
+            translationX2.setDuration(firstTranslationDuration);
             translationX2.setInterpolator(new ExpoOut());
-            translationX2.setStartDelay(700 + subtractDelay);
+            translationX2.setStartDelay(translations_startDelay);
             translationX2.start();
         }
 
-        final ObjectAnimator translationY = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, 0);
-        translationY.setDuration(700);
-        translationY.setInterpolator(new BackOut());
-        translationY.setStartDelay(700 + 800);
-        translationY.start();
-
         { //rotation
-            final float initialRotationX = TransitionHelper.TARGET_ROTATION_X;
-            final float finalRotationX = 0;
-            final float initialRotationZ = TransitionHelper.TARGET_ROTATION;
-            final float finalRotationZ = 0;
 
             target.setRotationX(initialRotationX);
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, initialRotationX, finalRotationX);
-            rotationX.setDuration(1000);
+            rotationX.setDuration(duration);
             rotationX.setInterpolator(new QuintInOut());
-            rotationX.setStartDelay(700 + TransitionHelper.FISRTDELAY + subtractDelay);
+            rotationX.setStartDelay(scale_shadow_rotationX_startDelay);
             rotationX.start();
 
             target.setRotation(initialRotationZ);
             final ObjectAnimator rotation = ObjectAnimator.ofFloat(target, View.ROTATION, initialRotationZ, finalRotationZ);
-            rotation.setDuration(1400);
+            rotation.setDuration(rotationZ_duration);
             rotation.setInterpolator(new QuadInOut());
-            rotation.setStartDelay(TransitionHelper.FISRTDELAY + subtractDelay);
+            rotation.setStartDelay(rotationZ_startDelay);
             rotation.start();
         }
 
+
         { //shadow
-            final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", customElevation * density, target.getCustomShadowElevation());
-            elevation.setDuration(1000);
+            target.setCustomShadowElevation(initialElevation);
+            final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", initialElevation, finalElevation);
+            elevation.setDuration(duration);
             elevation.setInterpolator(new QuintInOut());
-            elevation.setStartDelay(700 + TransitionHelper.FISRTDELAY + subtractDelay * 2);
+            elevation.setStartDelay(scale_shadow_rotationX_startDelay);
             elevation.start();
-            target.setCustomShadowElevation(customElevation * density);
         }
 
         { //enlarge
-            final float initialScale = TransitionHelper.TARGET_SCALE;
-            final float finalScaleY = target.getScaleY();
-            final float finalScaleX = target.getScaleX();
-
             target.setScaleX(initialScale);
             final ObjectAnimator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, initialScale, finalScaleX);
-            scaleX.setDuration(1000);
+            scaleX.setDuration(duration);
             scaleX.setInterpolator(new CircInOut());
-            scaleX.setStartDelay(700 + TransitionHelper.FISRTDELAY + subtractDelay);
+            scaleX.setStartDelay(scale_shadow_rotationX_startDelay);
             scaleX.start();
 
             target.setScaleY(initialScale);
             final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, initialScale, finalScaleY);
-            scaleY.setDuration(1000);
+            scaleY.setDuration(duration);
             scaleY.setInterpolator(new CircInOut());
-            scaleY.setStartDelay(700 + TransitionHelper.FISRTDELAY + subtractDelay);
+            scaleY.setStartDelay(scale_shadow_rotationX_startDelay);
             scaleY.addListener(listener);
             scaleY.start();
         }
     }
 
     public void start() {
-        introAnimate(depthLayout, 0, 30f, 180);
+        introAnimate(depthLayout);
     }
 
 }

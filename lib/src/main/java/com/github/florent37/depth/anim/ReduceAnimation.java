@@ -1,10 +1,8 @@
 package com.github.florent37.depth.anim;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
-import android.animation.ValueAnimator;
 import android.view.View;
 
 import no.agens.depth.lib.DepthLayout;
@@ -15,62 +13,114 @@ import no.agens.depth.lib.DepthLayout;
 
 public class ReduceAnimation {
 
-    private View root;
     private DepthLayout depthLayout;
+    private Animator.AnimatorListener listener;
+    private long totalDuration;
+
+    private ViewFinalState viewFinalState;
+
+    public ReduceAnimation() {
+        this.totalDuration = 1600l;
+
+        this.viewFinalState = new ViewFinalState.Builder()
+                .setFinalScale(0.5f)
+                .setFinalRotationX(60f)
+                .setFinalRotationZ(-50f)
+                .setFinalTranslationY(0)
+                .setFinalElevation(30f)
+                .build();
+    }
 
     public ReduceAnimation setDepthLayout(DepthLayout depthLayout) {
         this.depthLayout = depthLayout;
         return this;
     }
 
-    private ValueAnimator exitAnimate(final DepthLayout target, final float moveY, final float customElevation, long startDelay, int subtractDelay, Animator.AnimatorListener listener) {
+    public ReduceAnimation setListener(Animator.AnimatorListener listener) {
+        this.listener = listener;
+        return this;
+    }
+
+    public ReduceAnimation setViewFinalState(ViewFinalState viewFinalState) {
+        this.viewFinalState = viewFinalState;
+        return this;
+    }
+
+    public ReduceAnimation setDuration(long totalDuration) {
+        this.totalDuration = totalDuration;
+        return this;
+    }
+
+    public float getFinalRotationX(){
+        return viewFinalState.getFinalRotationX();
+    }
+
+    public float getFinalRotationZ(){
+        return viewFinalState.getFinalRotationZ();
+    }
+
+    private void exitAnimate(final DepthLayout target) {
         final TimeInterpolator interpolator = TransitionHelper.interpolator;
-        final int duration = TransitionHelper.DURATION;
         final float density = target.getResources().getDisplayMetrics().density;
 
         target.setPivotY(TransitionHelper.getDistanceToCenter(target));
         target.setPivotX(TransitionHelper.getDistanceToCenterX(target));
         target.setCameraDistance(10000 * density);
 
-        final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, TransitionHelper.TARGET_ROTATION_X).setDuration(duration);
-        rotationX.setInterpolator(interpolator);
-        rotationX.setStartDelay(startDelay);
-        rotationX.addListener(listener);
-        rotationX.start();
+        final long duration = (long) (totalDuration * 0.7f);
+        final long translationDuration = (long) (0.125 * totalDuration);
 
-        final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", target.getCustomShadowElevation(), customElevation * density).setDuration(duration);
-        elevation.setInterpolator(interpolator);
-        elevation.setStartDelay(startDelay);
-        elevation.start();
+        final float finalScale = viewFinalState.getFinalScale();
+        final float finalTranslationY = -1 * viewFinalState.getFinalTranslationY() * density;
+        final float finalRotationX = viewFinalState.getFinalRotationX();
+        final float finalRotationZ = viewFinalState.getFinalRotationZ();
+        final float finalElevation = viewFinalState.getFinalElevation() * density;
 
-        final ObjectAnimator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, TransitionHelper.TARGET_SCALE);
-        scaleX.setDuration(duration);
-        scaleX.setInterpolator(interpolator);
-        scaleX.setStartDelay(startDelay);
-        scaleX.start();
 
-        final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, TransitionHelper.TARGET_SCALE);
-        scaleY.setDuration(duration);
-        scaleY.setInterpolator(interpolator);
-        scaleY.setStartDelay(startDelay);
-        scaleY.start();
+        { //rotation X & Z
+            final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, finalRotationX);
+            rotationX.setDuration(duration);
+            rotationX.setInterpolator(interpolator);
+            rotationX.addListener(listener);
+            rotationX.start();
 
-        final ObjectAnimator rotation = ObjectAnimator.ofFloat(target, View.ROTATION, TransitionHelper.TARGET_ROTATION);
-        rotation.setDuration(duration + 500);
-        rotation.setInterpolator(interpolator);
-        rotation.setStartDelay(startDelay);
-        rotation.start();
+            final ObjectAnimator rotation = ObjectAnimator.ofFloat(target, View.ROTATION, finalRotationZ);
+            rotation.setDuration(totalDuration);
+            rotation.setInterpolator(interpolator);
+            rotation.start();
+        }
 
-        final ObjectAnimator translationY = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, -moveY * density);
-        translationY.setDuration(subtractDelay);
-        translationY.setInterpolator(interpolator);
-        translationY.setStartDelay(startDelay);
-        translationY.start();
+        { //shadow
+            final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", target.getCustomShadowElevation(), finalElevation);
+            elevation.setDuration(duration);
+            elevation.setInterpolator(interpolator);
+            elevation.start();
+        }
 
-        return scaleY;
+        { //scale
+
+            final ObjectAnimator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, finalScale);
+            scaleX.setDuration(duration);
+            scaleX.setInterpolator(interpolator);
+            scaleX.start();
+
+            final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, finalScale);
+            scaleY.setDuration(duration);
+            scaleY.setInterpolator(interpolator);
+            scaleY.start();
+        }
+
+
+        { //translation Y
+            final ObjectAnimator translationY = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, finalTranslationY);
+            translationY.setDuration(translationDuration);
+            translationY.setInterpolator(interpolator);
+            translationY.start();
+        }
+
     }
 
-    public void start(Animator.AnimatorListener listener) {
-        exitAnimate(depthLayout, 0, 30f, 30, 190, listener);
+    public void start() {
+        exitAnimate(depthLayout);
     }
 }

@@ -1,7 +1,6 @@
 package com.github.florent37.depth.anim;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.view.View;
@@ -16,32 +15,63 @@ import no.agens.depth.lib.tween.interpolators.ExpoIn;
 public class ExitAnimation {
 
     private DepthLayout depthLayout;
+    private Animator.AnimatorListener listener;
+
+    private long duration;
+
+    private float finalXPercent = 1f; //right of screen
+    private float finalYPercent = -1f; //top of screen
+
+    public ExitAnimation() {
+        this.duration = 900l;
+    }
 
     public ExitAnimation setDepthLayout(DepthLayout depthLayout) {
         this.depthLayout = depthLayout;
         return this;
     }
 
-    public void start(Animator.AnimatorListener listener) {
-        continueOutToRight(depthLayout, 0, 20, listener);
+    public ExitAnimation setListener(Animator.AnimatorListener listener) {
+        this.listener = listener;
+        return this;
     }
 
-    private void continueOutToRight(DepthLayout target, float moveY, int startDelay, Animator.AnimatorListener listener) {
-        final TimeInterpolator interpolator = new ExpoIn();
-        final int duration = 900;
+    public ExitAnimation setFinalXPercent(float finalXPercent) {
+        this.finalXPercent = finalXPercent;
+        return this;
+    }
 
-        final ObjectAnimator translationY2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, -moveY * target.getResources().getDisplayMetrics().density, -target.getResources().getDisplayMetrics().heightPixels);
+    public ExitAnimation setFinalYPercent(float finalYPercent) {
+        this.finalYPercent = finalYPercent;
+        return this;
+    }
+
+    public ExitAnimation setDuration(long duration) {
+        this.duration = duration;
+        return this;
+    }
+
+    //call after reduce
+    public void start() {
+        final float finalDestinationY = finalYPercent * depthLayout.getResources().getDisplayMetrics().heightPixels;
+        final float finalDestinationX = finalXPercent * depthLayout.getResources().getDisplayMetrics().widthPixels;
+
+        exitAnim(depthLayout, finalDestinationY, finalDestinationX);
+    }
+
+    private void exitAnim(DepthLayout target, float finalTranslationY, float finalTranslationX) {
+        final TimeInterpolator interpolator = new ExpoIn();
+
+        final ObjectAnimator translationY2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, finalTranslationY);
         translationY2.setDuration(duration);
         //translationY2.setInterpolator(new AccelerateInterpolator());
         translationY2.setInterpolator(interpolator);
-        translationY2.setStartDelay(startDelay);
         translationY2.addListener(listener);
         translationY2.start();
 
-        final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, target.getTranslationX(), target.getResources().getDisplayMetrics().widthPixels);
+        final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, finalTranslationX);
         translationX2.setDuration(duration);
         translationX2.setInterpolator(interpolator);
-        translationX2.setStartDelay(startDelay);
         translationX2.start();
     }
 
