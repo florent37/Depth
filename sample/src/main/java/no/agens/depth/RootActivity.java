@@ -42,6 +42,8 @@ public class RootActivity extends Activity implements Callback {
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();
         }
+
+        depth.setFragmentContainer(R.id.fragment_container);
     }
 
     private void makeAppFullscreen() {
@@ -57,8 +59,9 @@ public class RootActivity extends Activity implements Callback {
 
         depth
                 .animate()
-                .reduce(oldFragment)
-                .exit(oldFragment)
+                    .reduce(oldFragment)
+                    .exit(oldFragment)
+                    .enter(newFragment)
                 .start();
     }
 
@@ -66,8 +69,8 @@ public class RootActivity extends Activity implements Callback {
     public void openResetFragment(final Fragment fragment) {
         depth
                 .animate()
-                .reduce(fragment)
-                .revert(fragment)
+                    .reduce(fragment)
+                    .revert(fragment)
                 .start();
     }
 

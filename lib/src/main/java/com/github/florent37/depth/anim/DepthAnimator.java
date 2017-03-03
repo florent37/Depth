@@ -18,50 +18,89 @@ public class DepthAnimator {
 
     private Depth depth;
     private List<DepthAnimation> animations;
+    private int currentIndex;
+
+    private List<DepthFragmentState> fragmentsState;
 
     public DepthAnimator(Depth depth) {
         this.depth = depth;
         this.animations = new ArrayList<>();
+        this.fragmentsState = new ArrayList<>();
     }
 
     public DepthAnimator reduce(Fragment fragment) {
-        animations.add(new ReduceAnimation().setDepthLayout(getDepthLayout(fragment)));
+        this.add(new ReduceAnimation(), fragment);
         return this;
     }
 
-    public DepthAnimator insertFragment(Fragment fragment) {
-        animations.add(new EnterAnimation().setDepthLayout(getDepthLayout(fragment)));
+    public DepthAnimator enter(Fragment fragment) {
+        this.add(new EnterAnimation(), fragment);
         return this;
     }
 
     public DepthAnimator revert(Fragment fragment) {
-        animations.add(new RevertAnimation().setDepthLayout(getDepthLayout(fragment)));
+        this.add(new RevertAnimation(), fragment);
         return this;
     }
 
     public DepthAnimator exit(Fragment fragment) {
-        animations.add(new ExitAnimation().setDepthLayout(getDepthLayout(fragment)));
+        this.add(new ExitAnimation(), fragment);
         return this;
     }
 
-    private DepthLayout getDepthLayout(Fragment fragment){
+    private void add(DepthAnimation depthAnimation, Fragment fragment){
+        animations.add(depthAnimation);
+        fragmentsState.add(new DepthFragmentState(fragment));
+    }
+
+    private DepthLayout findDepthLayout(Fragment fragment) {
         return (DepthLayout) fragment.getView().findViewById(R.id.root_depth_layout);
+    }
+
+    private void afterAnimationEnd(int index) {
+        this.currentIndex = index + 1;
+        if(currentIndex < animations.size()) {
+            startAnimation(currentIndex);
+        } else{
+            depth.onAnimationFinished();
+        }
+    }
+
+    void reloadFragmentsState(){
+        for (DepthFragmentState depthFragmentState : fragmentsState) {
+            depthFragmentState.reloadReady();
+        }
+        startAnimation(currentIndex);
+    }
+
+    private void startAnimation(final int index){
+        final DepthFragmentState depthFragmentState = fragmentsState.get(index);
+
+        final Fragment fragment = depthFragmentState.getFragment();
+        if(fragment != null){
+            final boolean ready = depthFragmentState.isReady();
+            if (ready) {
+
+                final DepthAnimation animation = animations.get(index);
+                animation.setDepthLayout(findDepthLayout(fragment));
+                animation.setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        afterAnimationEnd(index);
+                    }
+                });
+                animation.start();
+            } else {
+                depth.addFragment(depthFragmentState.getFragment());
+            }
+        }
     }
 
     public void start() {
         //setup listeners
-        for (int i = 0; i < animations.size() - 1; ++i) { //-1
-            final DepthAnimation thisAnimation = animations.get(i);
-            final DepthAnimation nextAnimation = animations.get(i + 1);
-            thisAnimation.setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    nextAnimation.start();
-                }
-            });
+        if (!animations.isEmpty()) {
+            final int index = 0;
+            startAnimation(index);
         }
-
-        animations.get(0).start();
     }
 }

@@ -69,12 +69,11 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
 
         final long duration = (long) (totalDuration * 0.714f);
         final long firstTranslationDuration = (long) (duration * 0.8f);
-        final long translations_startDelay = (long) (duration * 0.7f);
-
-        final long fisrtdelay = (long) (duration * 0.3f); // ?
-        final long scale_shadow_rotationX_startDelay = translations_startDelay + fisrtdelay;
-        final long rotationZ_startDelay = fisrtdelay;
         final long rotationZ_duration = totalDuration;
+
+        final long rotationZ_startDelay = (long) (duration * 0.3f);
+        final long translations_startDelay = (long) (duration * 0.7f);
+        final long scale_shadow_rotationX_startDelay = rotationZ_startDelay + translations_startDelay;
 
         { //initial position & restore
             final int initialTranslationY = target.getResources().getDisplayMetrics().heightPixels;

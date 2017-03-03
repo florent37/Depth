@@ -29,8 +29,8 @@ public class DepthProvider {
             }
         }
         //not found
-        final Depth depth = new Depth();
-        depthForContext.put(new WeakReference<Context>(context), depth);
+        final Depth depth = new Depth(context);
+        depthForContext.put(new WeakReference<>(context), depth);
         return depth;
     }
 
