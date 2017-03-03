@@ -18,17 +18,12 @@ public class ReduceAnimation {
     private View root;
     private DepthLayout depthLayout;
 
-    public ReduceAnimation setRoot(View root) {
-        this.root = root;
-        return this;
-    }
-
     public ReduceAnimation setDepthLayout(DepthLayout depthLayout) {
         this.depthLayout = depthLayout;
         return this;
     }
 
-    private ValueAnimator exitAnimate(final DepthLayout target, final float moveY, final float customElevation, long startDelay, int subtractDelay) {
+    private ValueAnimator exitAnimate(final DepthLayout target, final float moveY, final float customElevation, long startDelay, int subtractDelay, Animator.AnimatorListener listener) {
         final TimeInterpolator interpolator = TransitionHelper.interpolator;
         final int duration = TransitionHelper.DURATION;
         final float density = target.getResources().getDisplayMetrics().density;
@@ -40,6 +35,7 @@ public class ReduceAnimation {
         final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, TransitionHelper.TARGET_ROTATION_X).setDuration(duration);
         rotationX.setInterpolator(interpolator);
         rotationX.setStartDelay(startDelay);
+        rotationX.addListener(listener);
         rotationX.start();
 
         final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", target.getCustomShadowElevation(), customElevation * density).setDuration(duration);
@@ -75,14 +71,6 @@ public class ReduceAnimation {
     }
 
     public void start(Animator.AnimatorListener listener) {
-        exitAnimate(depthLayout, 0, 30f, 15, 190);
-
-        final ObjectAnimator translationY = ObjectAnimator.ofFloat(root, View.TRANSLATION_Y, -90f * root.getResources().getDisplayMetrics().density);
-        translationY.setDuration(TransitionHelper.DURATION);
-        translationY.setInterpolator(TransitionHelper.interpolator);
-        if (listener != null) {
-            translationY.addListener(listener);
-        }
-        translationY.start();
+        exitAnimate(depthLayout, 0, 30f, 30, 190, listener);
     }
 }

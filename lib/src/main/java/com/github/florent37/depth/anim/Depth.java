@@ -5,7 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import no.agens.depth.lib.DepthLayout;
 import no.agens.depth.lib.R;
@@ -16,12 +16,30 @@ import no.agens.depth.lib.R;
 
 public class Depth {
     private static final int root_depth_layout = R.id.root_depth_layout;
+    private FragmentManager fragmentManager = new FragmentManagerImpl();
 
-    public static View setup(View view){
-        return new FragmentDepthView(view);
+    public static View setup(/*0-20*/ float depth, /*0-20*/ float elevation, View view) {
+        return new FragmentDepthView(view, depth, elevation);
     }
 
-    private FragmentManager fragmentManager = new FragmentManagerImpl();
+    public static void animateEnter(Fragment fragment) {
+        final View view = fragment.getView();
+        if (view != null) {
+            final DepthLayout depthLayout = (DepthLayout) view.findViewById(root_depth_layout);
+            if (depthLayout != null) {
+                view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        new EnterAnimation()
+                                .setDepthLayout(depthLayout)
+                                .start();
+                    }
+                });
+            }
+        }
+
+    }
 
     public Depth setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
@@ -33,7 +51,6 @@ public class Depth {
         final Activity activity = oldFragment.getActivity();
 
         new ReduceAnimation()
-                .setRoot(oldFragment.getView())
                 .setDepthLayout(depthLayout)
                 .start(new AnimatorListenerAdapter() {
                     @Override
@@ -55,27 +72,20 @@ public class Depth {
         final DepthLayout depthLayout = (DepthLayout) fragment.getView().findViewById(root_depth_layout);
 
         new ReduceAnimation()
-                .setRoot(fragment.getView())
                 .setDepthLayout(depthLayout)
                 .start(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         new RevertAnimation()
-                                .setRoot(fragment.getView())
                                 .setDepthLayout(depthLayout)
                                 .start();
                     }
                 });
     }
 
-    public static void animateEnter(Fragment fragment) {
-        new EnterAnimation()
-                .setDepthLayout((DepthLayout) fragment.getView().findViewById(root_depth_layout))
-                .start();
-    }
-
     public interface FragmentManager {
         void addFragment(Activity activity, int fragmentContainer, Fragment fragment);
+
         void removeFragment(Activity activity, Fragment fragment);
     }
 

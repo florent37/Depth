@@ -11,6 +11,7 @@ public class TransitionHelper {
     public static final float TARGET_ROTATION = -50f;
     public static final float TARGET_ROTATION_X = 60f;
     public static final int DURATION = 1100;
+
     public static final TimeInterpolator interpolator = new QuintOut();
 
     public static final int FISRTDELAY = 300;

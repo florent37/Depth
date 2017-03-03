@@ -14,11 +14,16 @@ public class FragmentDepthView extends FrameLayout {
 
     private DepthLayout depthLayout;
 
-    public FragmentDepthView(View fragmentView) {
+    public FragmentDepthView(View fragmentView, float depth, float elevation) {
         super(fragmentView.getContext());
         inflate(getContext(), R.layout.fragment_depth_view, this);
+
         depthLayout = (DepthLayout) findViewById(R.id.root_depth_layout);
+        //depthLayout.setDepth(depth * getResources().getDisplayMetrics().density);
+        //depthLayout.setCustomShadowElevation(elevation * getResources().getDisplayMetrics().density);
+
         depthLayout.addView(fragmentView);
+
     }
 
 }

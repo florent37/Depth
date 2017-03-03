@@ -17,16 +17,10 @@ import no.agens.depth.lib.tween.interpolators.QuintInOut;
 public class RevertAnimation {
 
     private Animator.AnimatorListener listener = new AnimatorListenerAdapter() {};
-    private View root;
     private DepthLayout depthLayout;
 
     public RevertAnimation setAnimatorListener(Animator.AnimatorListener animatorListener) {
         this.listener = animatorListener;
-        return this;
-    }
-
-    public RevertAnimation setRoot(View root) {
-        this.root = root;
         return this;
     }
 
@@ -89,12 +83,6 @@ public class RevertAnimation {
 
     public void start() {
         revertFromMenu(depthLayout, 30f, 10, 0);
-
-        final ObjectAnimator translationY = ObjectAnimator.ofFloat(root, View.TRANSLATION_Y, 0);
-        translationY.setDuration(TransitionHelper.DURATION);
-        translationY.setInterpolator(new QuintInOut());
-        translationY.addListener(listener);
-        translationY.start();
     }
 
 

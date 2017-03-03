@@ -11,19 +11,19 @@ import com.github.florent37.depth.anim.Depth;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Fragment1 extends Fragment {
+public class Fragment2 extends Fragment {
 
     public static Fragment newInstance(boolean animateEnter) {
         final Bundle args = new Bundle();
         args.putBoolean("animateEnter", animateEnter);
-        final Fragment waterFragment = new Fragment1();
+        final Fragment waterFragment = new Fragment2();
         waterFragment.setArguments(args);
         return waterFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return Depth.setup(inflater.inflate(R.layout.fragment_water, container, false));
+        return Depth.setup(10, 20f, inflater.inflate(R.layout.fragment_water_2, container, false));
     }
 
     @Override
