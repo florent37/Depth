@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="DepthView">
+    <declare-styleable name="DepthLayout">
 
         <attr name="is_circle" format="boolean"/>
 

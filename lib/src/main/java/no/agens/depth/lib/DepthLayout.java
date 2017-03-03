@@ -48,11 +48,11 @@ public class DepthLayout extends RelativeLayout {
         edgePaint.setColor(DEFAULT_EDGE_COLOR);
         edgePaint.setAntiAlias(true);
         if (attrs != null) {
-            TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.DepthView);
-            edgePaint.setColor(arr.getInt(R.styleable.DepthView_edge_color, DEFAULT_EDGE_COLOR));
-            setIsCircle(arr.getBoolean(R.styleable.DepthView_is_circle, false));
-            depth = arr.getDimension(R.styleable.DepthView_depth, DEFAULT_THICKNESS * getResources().getDisplayMetrics().density);
-            customShadowElevation = arr.getDimension(R.styleable.DepthView_custom_elevation, 0);
+            TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.DepthLayout);
+            edgePaint.setColor(arr.getInt(R.styleable.DepthLayout_edge_color, DEFAULT_EDGE_COLOR));
+            setIsCircle(arr.getBoolean(R.styleable.DepthLayout_is_circle, false));
+            depth = arr.getDimension(R.styleable.DepthLayout_depth, DEFAULT_THICKNESS * getResources().getDisplayMetrics().density);
+            customShadowElevation = arr.getDimension(R.styleable.DepthLayout_custom_elevation, 0);
         } else {
             edgePaint.setColor(DEFAULT_EDGE_COLOR);
             depth = DEFAULT_THICKNESS * getResources().getDisplayMetrics().density;

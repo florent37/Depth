@@ -21,4 +21,12 @@
 
     <color name="fire_end_color">#E89183</color>
     <color name="fire_start_color">#FCFBEB</color>
+
+    <color name="background">@color/blueLight</color>
+
+    <color name="blueLight">#2196F3</color>
+    <color name="blueDark">#1565C0</color>
+
+    <color name="colorPrimary">@color/blueLight</color>
+    <color name="colorPrimaryDark">@color/blueDark</color>
 </resources>

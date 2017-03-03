@@ -2,24 +2,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/water_scene"
+    <View
+        android:id="@+id/status_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/blue" />
+        android:layout_height="25dp"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="1dp" />
+
+    <com.github.florent37.awesomebar.AwesomeBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/status_bar"
+        android:background="@android:color/white"
+        android:elevation="1dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
         <View
             android:id="@+id/next"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/circle" />
+            android:background="@drawable/circle_blue" />
 
         <View
             android:id="@+id/open_reset"
@@ -27,7 +36,7 @@
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="15dp"
-            android:background="@drawable/circle" />
+            android:background="@drawable/circle_blue" />
     </LinearLayout>
 </RelativeLayout>
 
