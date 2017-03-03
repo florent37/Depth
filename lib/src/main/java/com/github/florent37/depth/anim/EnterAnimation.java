@@ -67,13 +67,12 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
         final float finalScaleX = target.getScaleX();
         final float finalElevation = target.getCustomShadowElevation();
 
-        final long duration = (long) (totalDuration * 0.714f);
-        final long firstTranslationDuration = (long) (duration * 0.8f);
-        final long rotationZ_duration = totalDuration;
+        final long scale_shadow_rotationX_startDelay = (long) (totalDuration * 0.6f);
+        final long rotationX_shadow_scale_duration = totalDuration - scale_shadow_rotationX_startDelay;
+        final long firstTranslationDuration = (long) (totalDuration * 0.6f);
 
-        final long rotationZ_startDelay = (long) (duration * 0.3f);
-        final long translations_startDelay = (long) (duration * 0.7f);
-        final long scale_shadow_rotationX_startDelay = rotationZ_startDelay + translations_startDelay;
+        final long rotationZ_startDelay = (long) (rotationX_shadow_scale_duration * 0.2f);
+        final long rotationZ_duration = (long) (totalDuration - rotationX_shadow_scale_duration / 2f - rotationZ_startDelay);
 
         { //initial position & restore
             final int initialTranslationY = target.getResources().getDisplayMetrics().heightPixels;
@@ -83,14 +82,12 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             final ObjectAnimator translationY2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, initialTranslationY, finalTranslationY);
             translationY2.setDuration(firstTranslationDuration);
             translationY2.setInterpolator(new ExpoOut());
-            translationY2.setStartDelay(translations_startDelay);
             translationY2.start();
 
             target.setTranslationX(initialTranslationX);
             final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, initialTranslationX, finalTranslationX);
             translationX2.setDuration(firstTranslationDuration);
             translationX2.setInterpolator(new ExpoOut());
-            translationX2.setStartDelay(translations_startDelay);
             translationX2.start();
         }
 
@@ -98,7 +95,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
 
             target.setRotationX(initialRotationX);
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, initialRotationX, finalRotationX);
-            rotationX.setDuration(duration);
+            rotationX.setDuration(rotationX_shadow_scale_duration);
             rotationX.setInterpolator(new QuintInOut());
             rotationX.setStartDelay(scale_shadow_rotationX_startDelay);
             rotationX.start();
@@ -115,7 +112,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
         { //shadow
             target.setCustomShadowElevation(initialElevation);
             final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", initialElevation, finalElevation);
-            elevation.setDuration(duration);
+            elevation.setDuration(rotationX_shadow_scale_duration);
             elevation.setInterpolator(new QuintInOut());
             elevation.setStartDelay(scale_shadow_rotationX_startDelay);
             elevation.start();
@@ -124,14 +121,14 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
         { //enlarge
             target.setScaleX(initialScale);
             final ObjectAnimator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, initialScale, finalScaleX);
-            scaleX.setDuration(duration);
+            scaleX.setDuration(rotationX_shadow_scale_duration);
             scaleX.setInterpolator(new CircInOut());
             scaleX.setStartDelay(scale_shadow_rotationX_startDelay);
             scaleX.start();
 
             target.setScaleY(initialScale);
             final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, initialScale, finalScaleY);
-            scaleY.setDuration(duration);
+            scaleY.setDuration(rotationX_shadow_scale_duration);
             scaleY.setInterpolator(new CircInOut());
             scaleY.setStartDelay(scale_shadow_rotationX_startDelay);
             scaleY.addListener(listener);
