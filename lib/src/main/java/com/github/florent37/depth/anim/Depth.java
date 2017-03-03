@@ -7,6 +7,9 @@ import android.app.Fragment;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import no.agens.depth.lib.DepthLayout;
 import no.agens.depth.lib.R;
 
@@ -19,9 +22,10 @@ public class Depth {
     private FragmentManager fragmentManager = new FragmentManagerImpl();
 
     Depth() {
+
     }
 
-    public View setup(/*0-20*/ float depth, /*0-20*/ float elevation, View view) {
+    public View setupFragment(/*0-20*/ float depth, /*0-20*/ float elevation, View view) {
         return new FragmentDepthView(view, depth, elevation);
     }
 
@@ -49,7 +53,7 @@ public class Depth {
         return this;
     }
 
-    public void changeFragment(final Fragment oldFragment, final int fragment_container, final Fragment newFragment) {
+    private void changeFragment(final Fragment oldFragment, final int fragment_container, final Fragment newFragment) {
         final DepthLayout depthLayout = (DepthLayout) oldFragment.getView().findViewById(root_depth_layout);
         final Activity activity = oldFragment.getActivity();
 
@@ -73,7 +77,7 @@ public class Depth {
                 .start();
     }
 
-    public void changeFragmentWithoutRotation(final Fragment oldFragment, final int fragment_container, final Fragment newFragment) {
+    private void changeFragmentWithoutRotation(final Fragment oldFragment, final int fragment_container, final Fragment newFragment) {
         final DepthLayout depthLayout = (DepthLayout) oldFragment.getView().findViewById(root_depth_layout);
         final Activity activity = oldFragment.getActivity();
 
@@ -105,7 +109,7 @@ public class Depth {
                 .start();
     }
 
-    public void openResetFragment(final Fragment fragment) {
+    private void openResetFragment(final Fragment fragment) {
         final DepthLayout depthLayout = (DepthLayout) fragment.getView().findViewById(root_depth_layout);
 
         new ReduceAnimation()
@@ -120,23 +124,11 @@ public class Depth {
                 }).start();
     }
 
-    public interface FragmentManager {
-        void addFragment(Activity activity, int fragmentContainer, Fragment fragment);
-
-        void removeFragment(Activity activity, Fragment fragment);
+    public DepthAnimator animate() {
+        return new DepthAnimator(this);
     }
 
-    public class FragmentManagerImpl implements FragmentManager {
-
-        @Override
-        public void addFragment(Activity activity, int fragmentContainer, Fragment fragment) {
-            activity.getFragmentManager().beginTransaction().add(fragmentContainer, fragment).commitAllowingStateLoss();
-        }
-
-        @Override
-        public void removeFragment(Activity activity, Fragment fragment) {
-            activity.getFragmentManager().beginTransaction().remove(fragment).commit();
-        }
+    public void onFragmentReady(Fragment fragment) {
 
     }
 }

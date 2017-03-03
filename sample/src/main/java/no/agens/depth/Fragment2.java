@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.florent37.depth.anim.Depth;
-import com.github.florent37.depth.anim.DepthBus;
+import com.github.florent37.depth.anim.DepthProvider;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,8 +26,8 @@ public class Fragment2 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        depth = DepthBus.getDepth(container);
-        return depth.setup(10, 20f, inflater.inflate(R.layout.fragment_water_2, container, false));
+        depth = DepthProvider.getDepth(container);
+        return depth.setupFragment(10, 20f, inflater.inflate(R.layout.fragment_water_2, container, false));
     }
 
     @Override
@@ -35,10 +35,7 @@ public class Fragment2 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        final boolean animateEnter = getArguments().getBoolean("animateEnter");
-        if (animateEnter) {
-            depth.animateEnter(this);
-        }
+        depth.onFragmentReady(this);
     }
 
     @OnClick(R.id.next)

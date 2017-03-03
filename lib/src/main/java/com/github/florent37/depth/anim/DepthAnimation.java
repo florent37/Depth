@@ -1,6 +1,7 @@
 package com.github.florent37.depth.anim;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 
 import no.agens.depth.lib.DepthLayout;
 
@@ -24,6 +25,7 @@ public abstract class DepthAnimation<THIS> {
 
     public THIS setDepthLayout(DepthLayout depthLayout) {
         this.depthLayout = depthLayout;
+        this.listener = new AnimatorListenerAdapter() {};
         return (THIS) this;
     }
 

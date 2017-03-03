@@ -40,10 +40,12 @@ public class ExitAnimation extends DepthAnimation<ExitAnimation>{
         final float finalDestinationY = finalYPercent * depthLayout.getResources().getDisplayMetrics().heightPixels;
         final float finalDestinationX = finalXPercent * depthLayout.getResources().getDisplayMetrics().widthPixels;
 
-        exitAnim(depthLayout, finalDestinationY, finalDestinationX);
+        exitAnim(finalDestinationY, finalDestinationX);
     }
 
-    private void exitAnim(DepthLayout target, float finalTranslationY, float finalTranslationX) {
+    private void exitAnim(float finalTranslationY, float finalTranslationX) {
+        final View target = this.depthLayout;
+
         final TimeInterpolator interpolator = new ExpoIn();
 
         final ObjectAnimator translationY2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, finalTranslationY);

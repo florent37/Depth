@@ -1,61 +1,59 @@
 package com.github.florent37.depth.anim;
 
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
 import no.agens.depth.lib.DepthLayout;
-import no.agens.depth.lib.tween.interpolators.BackOut;
 import no.agens.depth.lib.tween.interpolators.CircInOut;
 import no.agens.depth.lib.tween.interpolators.ExpoOut;
 import no.agens.depth.lib.tween.interpolators.QuadInOut;
 import no.agens.depth.lib.tween.interpolators.QuintInOut;
 
-import static com.github.florent37.depth.anim.TransitionHelper.FISRTDELAY;
-import static com.github.florent37.depth.anim.TransitionHelper.TARGET_ROTATION;
-import static com.github.florent37.depth.anim.TransitionHelper.TARGET_ROTATION_X;
-import static com.github.florent37.depth.anim.TransitionHelper.TARGET_SCALE;
-import static com.github.florent37.depth.anim.TransitionHelper.getDistanceToCenter;
-import static com.github.florent37.depth.anim.TransitionHelper.getDistanceToCenterX;
-
 /**
  * Created by florentchampigny on 02/03/2017.
  */
 
-public class EnterAnimation {
+public class EnterAnimation extends DepthAnimation<EnterAnimation> {
 
-    private AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {};
-
-    private DepthLayout depthLayout;
-    private long totalDuration;
+    private float initialRotationX;
+    private float initialRotationZ;
+    private float initialScale;
+    private float initialElevation;
 
     public EnterAnimation() {
-        totalDuration = 1400l;
+        this.totalDuration = 1400l;
+        this.initialRotationX = 60f;
+        this.initialRotationZ = -50f;
+        this.initialScale = 0.5f;
+        this.initialElevation = 30f;
     }
 
-    public EnterAnimation setEndListener(AnimatorListenerAdapter listener) {
-        this.listener = listener;
+    public EnterAnimation setInitialRotationX(float initialRotationX) {
+        this.initialRotationX = initialRotationX;
         return this;
     }
 
-    public EnterAnimation setTotalDuration(long totalDuration) {
-        this.totalDuration = totalDuration;
+    public EnterAnimation setInitialRotationZ(float initialRotationZ) {
+        this.initialRotationZ = initialRotationZ;
         return this;
     }
 
-    public EnterAnimation setDepthLayout(DepthLayout depthLayout) {
-        this.depthLayout = depthLayout;
+    public EnterAnimation setInitialScale(float initialScale) {
+        this.initialScale = initialScale;
         return this;
     }
 
-    private void introAnimate(final DepthLayout target) {
+    public EnterAnimation setInitialElevation(float initialElevation) {
+        this.initialElevation = initialElevation;
+        return this;
+    }
+
+    private void introAnimate() {
+        final DepthLayout target = this.depthLayout;
+
         final float density = target.getResources().getDisplayMetrics().density;
 
-        //TODO
-        final float initialRotationX = TransitionHelper.TARGET_ROTATION_X;
-        final float initialRotationZ = TransitionHelper.TARGET_ROTATION;
-        final float initialScale = TransitionHelper.TARGET_SCALE;
-        final float initialElevation = 30f * density;
+        final float initialElevation = this.initialElevation * density;
 
         target.setPivotY(TransitionHelper.getDistanceToCenter(target));
         target.setPivotX(TransitionHelper.getDistanceToCenterX(target));
@@ -142,8 +140,9 @@ public class EnterAnimation {
         }
     }
 
+    @Override
     public void start() {
-        introAnimate(depthLayout);
+        introAnimate();
     }
 
 }

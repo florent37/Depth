@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.github.florent37.depth.anim.Depth;
-import com.github.florent37.depth.anim.DepthBus;
+import com.github.florent37.depth.anim.DepthProvider;
 
 
 public class RootActivity extends Activity implements Callback {
@@ -19,7 +19,23 @@ public class RootActivity extends Activity implements Callback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        depth = DepthBus.getDepth(this);
+        depth = DepthProvider.getDepth(this);
+
+        //  depth.setFragmentManager(new Depth.FragmentManager() {
+        //      @Override
+        //      public void addFragment(Activity activity, int fragmentContainer, Fragment fragment) {
+        //          activity.getFragmentManager().beginTransaction()
+        //                  .replace(fragmentContainer, fragment)
+        //                  .commitAllowingStateLoss();
+        //      }
+        //
+        //      @Override
+        //      public void removeFragment(Activity activity, Fragment fragment) {
+        //          activity.getFragmentManager().beginTransaction()
+        //                  .remove(fragment)
+        //                  .commitAllowingStateLoss();
+        //      }
+        //  });
 
         setContentView(R.layout.activity_root);
         makeAppFullscreen();
@@ -37,17 +53,22 @@ public class RootActivity extends Activity implements Callback {
 
     @Override
     public void changeFragment(final Fragment oldFragment) {
-        count++;
-        if(count % 2 == 0) {
-            depth.changeFragment(oldFragment, R.id.fragment_container, Fragment1.newInstance(true));
-        } else {
-            depth.changeFragment(oldFragment, R.id.fragment_container, Fragment2.newInstance(true));
-        }
+        final Fragment newFragment = (count++ %2 == 0) ? Fragment1.newInstance(true) : Fragment2.newInstance(true);
+
+        depth
+                .animate()
+                .reduce(oldFragment)
+                .exit(oldFragment)
+                .start();
     }
 
     @Override
     public void openResetFragment(final Fragment fragment) {
-        depth.openResetFragment(fragment);
+        depth
+                .animate()
+                .reduce(fragment)
+                .revert(fragment)
+                .start();
     }
 
 }

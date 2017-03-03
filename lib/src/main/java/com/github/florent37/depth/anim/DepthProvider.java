@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by florentchampigny on 03/03/2017.
  */
 
-public class DepthBus {
+public class DepthProvider {
 
     private static Map<WeakReference<Context>, Depth> depthForContext = new HashMap<>();
 
