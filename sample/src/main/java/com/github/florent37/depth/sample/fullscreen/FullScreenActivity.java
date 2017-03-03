@@ -1,9 +1,9 @@
 package com.github.florent37.depth.sample.fullscreen;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.github.florent37.depth.anim.Depth;
@@ -13,7 +13,7 @@ import com.github.florent37.depth.anim.animations.ExitConfiguration;
 import com.github.florent37.depth.anim.animations.ReduceConfiguration;
 import com.github.florent37.depth.sample.R;
 
-public class FullScreenActivity extends Activity implements FragmentCallback {
+public class FullScreenActivity extends AppCompatActivity implements FragmentCallback {
 
     int count = 0;
     private Depth depth;
@@ -43,7 +43,7 @@ public class FullScreenActivity extends Activity implements FragmentCallback {
         setContentView(R.layout.activity_fullscreen);
         makeAppFullscreen();
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();
         }
 
         depth.setFragmentContainer(R.id.fragment_container);

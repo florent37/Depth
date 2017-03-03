@@ -1,13 +1,16 @@
 package com.github.florent37.depth.sample.exitenter;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.florent37.depth.anim.Depth;
+import com.github.florent37.depth.anim.DepthListener;
 import com.github.florent37.depth.anim.DepthProvider;
+import com.github.florent37.depth.anim.animations.DepthAnimation;
 import com.github.florent37.depth.sample.R;
 
 import butterknife.ButterKnife;
@@ -37,6 +40,13 @@ public class Fragment1 extends Fragment {
         ButterKnife.bind(this, view);
 
         depth.onFragmentReady(this);
+
+        depth.addListener(new DepthListener() {
+            @Override
+            public void onAnimationEnd(DepthAnimation depthAnimation, Fragment fragment) {
+                Toast.makeText(getActivity(), depthAnimation.getClass().getCanonicalName(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @OnClick(R.id.layout)

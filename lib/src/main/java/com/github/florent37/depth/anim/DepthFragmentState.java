@@ -1,7 +1,7 @@
 package com.github.florent37.depth.anim;
 
-import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 
 import java.lang.ref.WeakReference;
 

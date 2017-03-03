@@ -1,6 +1,7 @@
 package com.github.florent37.depth.sample.exitenter;
 
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 
 /**
  * Created by florentchampigny on 02/03/2017.

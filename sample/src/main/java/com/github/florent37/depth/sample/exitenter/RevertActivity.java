@@ -1,16 +1,16 @@
 package com.github.florent37.depth.sample.exitenter;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.github.florent37.depth.anim.Depth;
 import com.github.florent37.depth.anim.DepthProvider;
 import com.github.florent37.depth.sample.R;
 
-public class RevertActivity extends Activity implements FragmentCallback {
+public class RevertActivity extends AppCompatActivity implements FragmentCallback {
 
     boolean opened = false;
     private Depth depth;
@@ -24,7 +24,7 @@ public class RevertActivity extends Activity implements FragmentCallback {
         setContentView(R.layout.activity_revert);
         //makeAppFullscreen();
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();
         }
 
         depth.setFragmentContainer(R.id.fragment_container);

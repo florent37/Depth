@@ -1,17 +1,17 @@
 package com.github.florent37.depth.anim;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.FloatRange;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.gihub.florent37.depth.R;
+import com.github.florent37.depth.anim.animations.DepthAnimation;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by florentchampigny on 02/03/2017.
@@ -22,12 +22,14 @@ public class Depth {
 
     private DepthAnimator depthAnimator;
     private int fragmentContainer;
-    private WeakReference<Activity> contextReference;
+    private WeakReference<FragmentActivity> contextReference;
+    private List<WeakReference<DepthListener>> listeners;
 
     Depth(Context context) {
-        if (context instanceof Activity) {
-            contextReference = new WeakReference<>((Activity) context);
+        if (context instanceof FragmentActivity) {
+            contextReference = new WeakReference<>((FragmentActivity) context);
         }
+        listeners = new ArrayList<>();
     }
 
     public View setupFragment(@FloatRange(from = 0, to = 20) float depth, @FloatRange(from = 0, to = 20) float elevation, View view) {
@@ -44,7 +46,7 @@ public class Depth {
     }
 
     public DepthAnimator animate() {
-        if(depthAnimator == null) {
+        if (depthAnimator == null) {
             this.depthAnimator = new DepthAnimator(this);
         }
         return depthAnimator;
@@ -70,7 +72,7 @@ public class Depth {
 
     public void addFragment(Fragment fragment) {
         if (contextReference != null) {
-            final Activity activity = contextReference.get();
+            final FragmentActivity activity = contextReference.get();
             if (contextReference != null) {
                 fragmentManager.addFragment(activity, fragmentContainer, fragment);
             }
@@ -79,5 +81,18 @@ public class Depth {
 
     void onAnimationFinished() {
         depthAnimator = null;
+    }
+
+    public void addListener(DepthListener depthListener) {
+        this.listeners.add(new WeakReference<>(depthListener));
+    }
+
+    void notifyListenersEnd(DepthAnimation depthAnimation, Fragment fragment) {
+        for (WeakReference<DepthListener> reference : listeners) {
+            final DepthListener depthListener = reference.get();
+            if (depthListener != null) {
+                depthListener.onAnimationEnd(depthAnimation, fragment);
+            }
+        }
     }
 }

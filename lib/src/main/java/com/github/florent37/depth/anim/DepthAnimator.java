@@ -2,7 +2,7 @@ package com.github.florent37.depth.anim;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 import com.gihub.florent37.depth.R;
 import com.github.florent37.depth.anim.animations.DepthAnimation;
@@ -84,6 +84,7 @@ public class DepthAnimator {
     }
 
     private void afterAnimationEnd(int index) {
+        depth.notifyListenersEnd(animations.get(index), fragmentsState.get(index).getFragment());
         this.currentIndex = index + 1;
         if (currentIndex < animations.size()) {
             startAnimation(currentIndex);

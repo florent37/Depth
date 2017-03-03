@@ -1,14 +1,14 @@
 package com.github.florent37.depth.anim;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * Created by florentchampigny on 03/03/2017.
  */
 
 public interface FragmentManager {
-    void addFragment(Activity activity, int fragmentContainer, Fragment fragment);
+    void addFragment(FragmentActivity activity, int fragmentContainer, Fragment fragment);
 
-    void removeFragment(Activity activity, Fragment fragment);
+    void removeFragment(FragmentActivity activity, Fragment fragment);
 }

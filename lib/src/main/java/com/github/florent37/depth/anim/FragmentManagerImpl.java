@@ -1,7 +1,7 @@
 package com.github.florent37.depth.anim;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * Created by florentchampigny on 03/03/2017.
@@ -10,13 +10,13 @@ import android.app.Fragment;
 public class FragmentManagerImpl implements FragmentManager {
 
     @Override
-    public void addFragment(Activity activity, int fragmentContainer, Fragment fragment) {
-        activity.getFragmentManager().beginTransaction().add(fragmentContainer, fragment).commitAllowingStateLoss();
+    public void addFragment(FragmentActivity activity, int fragmentContainer, Fragment fragment) {
+        activity.getSupportFragmentManager().beginTransaction().add(fragmentContainer, fragment).commitAllowingStateLoss();
     }
 
     @Override
-    public void removeFragment(Activity activity, Fragment fragment) {
-        activity.getFragmentManager().beginTransaction().remove(fragment).commit();
+    public void removeFragment(FragmentActivity activity, Fragment fragment) {
+        activity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 
 }
