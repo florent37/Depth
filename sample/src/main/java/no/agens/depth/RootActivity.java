@@ -8,12 +8,15 @@ import android.view.View;
 
 import com.github.florent37.depth.anim.Depth;
 import com.github.florent37.depth.anim.DepthProvider;
+import com.github.florent37.depth.anim.animations.EnterConfiguration;
+import com.github.florent37.depth.anim.animations.ExitConfiguration;
+import com.github.florent37.depth.anim.animations.ReduceConfiguration;
 
 
 public class RootActivity extends Activity implements Callback {
 
-    private Depth depth;
     int count = 0;
+    private Depth depth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +58,19 @@ public class RootActivity extends Activity implements Callback {
 
     @Override
     public void changeFragment(final Fragment oldFragment) {
-        final Fragment newFragment = (count++ %2 == 0) ? Fragment1.newInstance(true) : Fragment2.newInstance(true);
+        final Fragment newFragment = (++count % 2 == 0) ? Fragment1.newInstance(true) : Fragment2.newInstance(true);
 
         depth
                 .animate()
-                    .reduce(oldFragment)
-                    .exit(oldFragment)
-                    .enter(newFragment)
+                .reduce(oldFragment)
+                .exit(oldFragment, new ExitConfiguration()
+                        .setFinalXPercent(1f)
+                        .setFinalYPercent(-1f)
+                )
+                .enter(newFragment, new EnterConfiguration()
+                        .setInitialXPercent(-1f)
+                        .setInitialYPercent(1f)
+                )
                 .start();
     }
 
@@ -69,8 +78,8 @@ public class RootActivity extends Activity implements Callback {
     public void openResetFragment(final Fragment fragment) {
         depth
                 .animate()
-                    .reduce(fragment)
-                    .revert(fragment)
+                .reduce(fragment, new ReduceConfiguration().setScale(0.2f))
+                .revert(fragment)
                 .start();
     }
 

@@ -1,7 +1,9 @@
-package com.github.florent37.depth.anim;
+package com.github.florent37.depth.anim.animations;
 
 import android.animation.ObjectAnimator;
 import android.view.View;
+
+import com.github.florent37.depth.anim.TransitionHelper;
 
 import no.agens.depth.lib.DepthLayout;
 import no.agens.depth.lib.tween.interpolators.BackOut;
@@ -14,37 +16,53 @@ import no.agens.depth.lib.tween.interpolators.QuintInOut;
 
 public class RevertAnimation extends DepthAnimation<RevertAnimation> {
 
+    private RevertConfiguration revertConfiguration;
+
     public RevertAnimation() {
-        this.totalDuration = 1100l;
-        this.finalElevation = 30f;
-        this.finalRotationX = 0f;
-        this.finalRotationZ = 0f;
-        this.finalTranslationY = 0f;
-        this.finalScale = 1f;
+        this.revertConfiguration = new RevertConfiguration();
+    }
+
+    public RevertAnimation setRevertConfiguration(RevertConfiguration revertConfiguration) {
+        if (revertConfiguration != null) {
+            this.revertConfiguration = revertConfiguration;
+        }
+        return this;
     }
 
     private void revertFromMenu() {
         final DepthLayout target = depthLayout;
 
+        final long totalDuration = revertConfiguration.getDuration();
+
         final float density = target.getResources().getDisplayMetrics().density;
-        final long duration = (long) (totalDuration - totalDuration * 0.1f);
-        final int fisrtdelay = 300;
+        final long duration = (long) (totalDuration * 0.9f);
+        final int firstDelay = (int) (duration * 0.3f);
 
         target.setPivotY(TransitionHelper.getDistanceToCenter(target));
         target.setPivotX(TransitionHelper.getDistanceToCenterX(target));
         target.setCameraDistance(10000 * density);
 
-        final float finalElevation = this.finalElevation * density;
-        final float finalTranslationY = this.finalTranslationY * density;
+        final float finalElevation = revertConfiguration.getElevation() * density;
+        final float finalTranslationY = revertConfiguration.getTranslationY() * density;
+        final float finalTranslationX = revertConfiguration.getTranslationX() * density;
+        final float finalRotationX = revertConfiguration.getRotationX();
+        final float finalRotationZ = revertConfiguration.getRotationZ();
+        final float finalScale = revertConfiguration.getScale();
 
-        { //translation Y
+        { //translation
             final long translationDuration = (long) (duration * 0.7f);
 
             final ObjectAnimator translationY = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, finalTranslationY);
             translationY.setDuration(translationDuration);
             translationY.setInterpolator(new BackOut());
-            translationY.setStartDelay((long) (duration * 0.25f + fisrtdelay));
+            translationY.setStartDelay((long) (duration * 0.25f + firstDelay));
             translationY.start();
+
+            final ObjectAnimator translationX = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, finalTranslationX);
+            translationX.setDuration(translationDuration);
+            translationX.setInterpolator(new BackOut());
+            translationX.setStartDelay((long) (duration * 0.25f + firstDelay));
+            translationX.start();
         }
 
         { //rotation
@@ -56,7 +74,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, target.getRotationX(), finalRotationX);
             rotationX.setDuration(duration);
             rotationX.setInterpolator(new QuintInOut());
-            rotationX.setStartDelay(fisrtdelay);
+            rotationX.setStartDelay(firstDelay);
             rotationX.start();
 //            target.setRotationX(TransitionHelper.TARGET_ROTATION_X);
         }
@@ -65,7 +83,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", target.getCustomShadowElevation(), finalElevation);
             elevation.setDuration(duration);
             elevation.setInterpolator(new QuintInOut());
-            elevation.setStartDelay(fisrtdelay);
+            elevation.setStartDelay(firstDelay);
             elevation.start();
             target.setCustomShadowElevation(finalElevation * density);
         }
@@ -74,14 +92,14 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             final ObjectAnimator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, target.getScaleX(), finalScale);
             scaleX.setDuration(duration);
             scaleX.setInterpolator(new CircInOut());
-            scaleX.setStartDelay(fisrtdelay);
+            scaleX.setStartDelay(firstDelay);
             scaleX.start();
             //target.setScaleX(TransitionHelper.TARGET_SCALE);
 
             final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, target.getScaleY(), finalScale);
             scaleY.setDuration(duration);
             scaleY.setInterpolator(new CircInOut());
-            scaleY.setStartDelay(fisrtdelay);
+            scaleY.setStartDelay(firstDelay);
             scaleY.start();
             //target.setScaleY(TransitionHelper.TARGET_SCALE);
         }

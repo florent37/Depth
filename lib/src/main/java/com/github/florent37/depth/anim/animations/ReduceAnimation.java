@@ -1,8 +1,10 @@
-package com.github.florent37.depth.anim;
+package com.github.florent37.depth.anim.animations;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.view.View;
+
+import com.github.florent37.depth.anim.TransitionHelper;
 
 import no.agens.depth.lib.DepthLayout;
 
@@ -12,18 +14,17 @@ import no.agens.depth.lib.DepthLayout;
 
 public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
 
-    public ReduceAnimation() {
-        this.totalDuration = 1600l;
+    private ReduceConfiguration reduceConfiguration = new ReduceConfiguration();
 
-        this.finalScale = 0.5f;
-        this.finalTranslationX = 0;
-        this.finalTranslationY = 0;
-        this.finalRotationX = 60f;
-        this.finalRotationZ = -50f;
-        this.finalElevation = 30f;
+    public ReduceAnimation setReduceConfiguration(ReduceConfiguration reduceConfiguration) {
+        if (reduceConfiguration != null) {
+            this.reduceConfiguration = reduceConfiguration;
+        }
+        return this;
     }
 
     private void exitAnimate() {
+
         final DepthLayout target = depthLayout;
 
         final TimeInterpolator interpolator = TransitionHelper.interpolator;
@@ -33,11 +34,16 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
         target.setPivotX(TransitionHelper.getDistanceToCenterX(target));
         target.setCameraDistance(10000 * density);
 
+        final long totalDuration = reduceConfiguration.getDuration();
+
         final long duration = (long) (totalDuration * 0.7f);
         final long translationDuration = (long) (0.125 * totalDuration);
 
-        final float finalTranslationY = this.finalTranslationY * density;
-        final float finalElevation = this.finalElevation * density;
+        final float finalTranslationY = reduceConfiguration.getTranslationY() * density;
+        final float finalElevation = reduceConfiguration.getElevation() * density;
+        final float finalScale = reduceConfiguration.getScale();
+        final float finalRotationX = reduceConfiguration.getRotationX();
+        final float finalRotationZ = reduceConfiguration.getRotationZ();
 
         { //rotation X & Z
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, finalRotationX);

@@ -4,6 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 
+import com.github.florent37.depth.anim.animations.DepthAnimation;
+import com.github.florent37.depth.anim.animations.EnterAnimation;
+import com.github.florent37.depth.anim.animations.EnterConfiguration;
+import com.github.florent37.depth.anim.animations.ExitAnimation;
+import com.github.florent37.depth.anim.animations.ExitConfiguration;
+import com.github.florent37.depth.anim.animations.ReduceAnimation;
+import com.github.florent37.depth.anim.animations.ReduceConfiguration;
+import com.github.florent37.depth.anim.animations.RevertAnimation;
+import com.github.florent37.depth.anim.animations.RevertConfiguration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,27 +38,43 @@ public class DepthAnimator {
         this.fragmentsState = new ArrayList<>();
     }
 
+    public DepthAnimator reduce(Fragment fragment, ReduceConfiguration reduceConfiguration) {
+        this.add(new ReduceAnimation().setReduceConfiguration(reduceConfiguration), fragment);
+        return this;
+    }
+
     public DepthAnimator reduce(Fragment fragment) {
-        this.add(new ReduceAnimation(), fragment);
+        return reduce(fragment, null);
+    }
+
+    public DepthAnimator enter(Fragment fragment, EnterConfiguration enterConfiguration) {
+        this.add(new EnterAnimation().setEnterConfiguration(enterConfiguration), fragment);
         return this;
     }
 
     public DepthAnimator enter(Fragment fragment) {
-        this.add(new EnterAnimation(), fragment);
+        return enter(fragment, null);
+    }
+
+    public DepthAnimator revert(Fragment fragment, RevertConfiguration revertConfiguration) {
+        this.add(new RevertAnimation().setRevertConfiguration(revertConfiguration), fragment);
         return this;
     }
 
     public DepthAnimator revert(Fragment fragment) {
-        this.add(new RevertAnimation(), fragment);
+        return revert(fragment, null);
+    }
+
+    public DepthAnimator exit(Fragment fragment, ExitConfiguration exitConfiguration) {
+        this.add(new ExitAnimation().setExitConfiguration(exitConfiguration), fragment);
         return this;
     }
 
     public DepthAnimator exit(Fragment fragment) {
-        this.add(new ExitAnimation(), fragment);
-        return this;
+        return exit(fragment, null);
     }
 
-    private void add(DepthAnimation depthAnimation, Fragment fragment){
+    private void add(DepthAnimation depthAnimation, Fragment fragment) {
         animations.add(depthAnimation);
         fragmentsState.add(new DepthFragmentState(fragment));
     }
@@ -59,25 +85,25 @@ public class DepthAnimator {
 
     private void afterAnimationEnd(int index) {
         this.currentIndex = index + 1;
-        if(currentIndex < animations.size()) {
+        if (currentIndex < animations.size()) {
             startAnimation(currentIndex);
-        } else{
+        } else {
             depth.onAnimationFinished();
         }
     }
 
-    void reloadFragmentsState(){
+    void reloadFragmentsState() {
         for (DepthFragmentState depthFragmentState : fragmentsState) {
             depthFragmentState.reloadReady();
         }
         startAnimation(currentIndex);
     }
 
-    private void startAnimation(final int index){
+    private void startAnimation(final int index) {
         final DepthFragmentState depthFragmentState = fragmentsState.get(index);
 
         final Fragment fragment = depthFragmentState.getFragment();
-        if(fragment != null){
+        if (fragment != null) {
             final boolean ready = depthFragmentState.isReady();
             if (ready) {
 
