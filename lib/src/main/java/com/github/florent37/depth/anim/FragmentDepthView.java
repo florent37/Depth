@@ -19,8 +19,8 @@ public class FragmentDepthView extends FrameLayout {
         inflate(getContext(), R.layout.fragment_depth_view, this);
 
         depthLayout = (DepthLayout) findViewById(R.id.root_depth_layout);
-        //depthLayout.setDepth(depth * getResources().getDisplayMetrics().density);
-        //depthLayout.setCustomShadowElevation(elevation * getResources().getDisplayMetrics().density);
+        depthLayout.setDepth(depth * getResources().getDisplayMetrics().density);
+        depthLayout.setCustomShadowElevation(elevation * getResources().getDisplayMetrics().density);
 
         depthLayout.addView(fragmentView);
 
