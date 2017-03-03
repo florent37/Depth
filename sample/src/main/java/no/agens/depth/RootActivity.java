@@ -60,16 +60,92 @@ public class RootActivity extends Activity implements Callback {
     public void changeFragment(final Fragment oldFragment) {
         final Fragment newFragment = (++count % 2 == 0) ? Fragment1.newInstance(true) : Fragment2.newInstance(true);
 
+        switch (count % 4){
+            case 0:
+                animateDefault(oldFragment, newFragment);
+                break;
+            case 1:
+                animateOnTop(oldFragment, newFragment);
+                break;
+            case 2:
+                animateOnLeft(oldFragment, newFragment);
+                break;
+            case 3:
+                animateOnRightFromRight(oldFragment, newFragment);
+                break;
+        }
+    }
+
+    private void animateDefault(final Fragment oldFragment, final Fragment newFragment){
         depth
                 .animate()
                 .reduce(oldFragment)
+
+                .exit(oldFragment)
+
+                .enter(newFragment)
+                .start();
+    }
+
+    private void animateOnTop(final Fragment oldFragment, final Fragment newFragment){
+        depth
+                .animate()
+                .reduce(oldFragment, new ReduceConfiguration()
+                        .setRotationZ(0f)
+                        .setRotationX(30f)
+                )
+
                 .exit(oldFragment, new ExitConfiguration()
-                        .setFinalXPercent(1f)
+                        .setFinalXPercent(0f)
                         .setFinalYPercent(-1f)
                 )
                 .enter(newFragment, new EnterConfiguration()
-                        .setInitialXPercent(-1f)
+                        .setInitialXPercent(0f)
                         .setInitialYPercent(1f)
+                        .setInitialRotationZ(0f)
+                        .setInitialRotationX(30f)
+                )
+                .start();
+    }
+
+    private void animateOnLeft(final Fragment oldFragment, final Fragment newFragment){
+        depth
+                .animate()
+                .reduce(oldFragment, new ReduceConfiguration()
+                        .setRotationZ(0f)
+                        .setRotationX(30f)
+                )
+
+                .exit(oldFragment, new ExitConfiguration()
+                        .setFinalXPercent(-1f)
+                        .setFinalYPercent(0f)
+                )
+                .enter(newFragment, new EnterConfiguration()
+                        .setInitialXPercent(1f)
+                        .setInitialYPercent(0f)
+                        .setInitialRotationZ(0f)
+                        .setInitialRotationX(30f)
+                )
+                .start();
+    }
+
+    private void animateOnRightFromRight(final Fragment oldFragment, final Fragment newFragment){
+        depth
+                .animate()
+                .reduce(oldFragment, new ReduceConfiguration()
+                        .setRotationZ(10f)
+                        .setRotationX(30f)
+                )
+
+                .exit(oldFragment, new ExitConfiguration()
+                        .setFinalXPercent(1f)
+                        .setFinalYPercent(0f)
+                )
+                .enter(newFragment, new EnterConfiguration()
+                        .setInitialXPercent(1f)
+                        .setInitialYPercent(0f)
+                        .setInitialRotationZ(10f)
+                        .setInitialRotationX(30f)
                 )
                 .start();
     }
@@ -78,7 +154,7 @@ public class RootActivity extends Activity implements Callback {
     public void openResetFragment(final Fragment fragment) {
         depth
                 .animate()
-                .reduce(fragment, new ReduceConfiguration().setScale(0.2f))
+                .reduce(fragment, new ReduceConfiguration().setScale(0.5f))
                 .revert(fragment)
                 .start();
     }
