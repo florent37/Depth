@@ -1,6 +1,5 @@
 package com.github.florent37.depth.anim;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.view.View;
@@ -11,55 +10,22 @@ import no.agens.depth.lib.DepthLayout;
  * Created by florentchampigny on 02/03/2017.
  */
 
-public class ReduceAnimation {
-
-    private DepthLayout depthLayout;
-    private Animator.AnimatorListener listener;
-    private long totalDuration;
-
-    private ViewFinalState viewFinalState;
+public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
 
     public ReduceAnimation() {
         this.totalDuration = 1600l;
 
-        this.viewFinalState = new ViewFinalState.Builder()
-                .setFinalScale(0.5f)
-                .setFinalRotationX(60f)
-                .setFinalRotationZ(-50f)
-                .setFinalTranslationY(0)
-                .setFinalElevation(30f)
-                .build();
+        this.finalScale = 0.5f;
+        this.finalTranslationX = 0;
+        this.finalTranslationY = 0;
+        this.finalRotationX = 60f;
+        this.finalRotationZ = -50f;
+        this.finalElevation = 30f;
     }
 
-    public ReduceAnimation setDepthLayout(DepthLayout depthLayout) {
-        this.depthLayout = depthLayout;
-        return this;
-    }
+    private void exitAnimate() {
+        final DepthLayout target = depthLayout;
 
-    public ReduceAnimation setListener(Animator.AnimatorListener listener) {
-        this.listener = listener;
-        return this;
-    }
-
-    public ReduceAnimation setViewFinalState(ViewFinalState viewFinalState) {
-        this.viewFinalState = viewFinalState;
-        return this;
-    }
-
-    public ReduceAnimation setDuration(long totalDuration) {
-        this.totalDuration = totalDuration;
-        return this;
-    }
-
-    public float getFinalRotationX(){
-        return viewFinalState.getFinalRotationX();
-    }
-
-    public float getFinalRotationZ(){
-        return viewFinalState.getFinalRotationZ();
-    }
-
-    private void exitAnimate(final DepthLayout target) {
         final TimeInterpolator interpolator = TransitionHelper.interpolator;
         final float density = target.getResources().getDisplayMetrics().density;
 
@@ -70,12 +36,8 @@ public class ReduceAnimation {
         final long duration = (long) (totalDuration * 0.7f);
         final long translationDuration = (long) (0.125 * totalDuration);
 
-        final float finalScale = viewFinalState.getFinalScale();
-        final float finalTranslationY = -1 * viewFinalState.getFinalTranslationY() * density;
-        final float finalRotationX = viewFinalState.getFinalRotationX();
-        final float finalRotationZ = viewFinalState.getFinalRotationZ();
-        final float finalElevation = viewFinalState.getFinalElevation() * density;
-
+        final float finalTranslationY = this.finalTranslationY * density;
+        final float finalElevation = this.finalElevation * density;
 
         { //rotation X & Z
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, finalRotationX);
@@ -120,7 +82,8 @@ public class ReduceAnimation {
 
     }
 
+    @Override
     public void start() {
-        exitAnimate(depthLayout);
+        exitAnimate();
     }
 }

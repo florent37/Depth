@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.github.florent37.depth.anim.Depth;
+import com.github.florent37.depth.anim.DepthBus;
 
 
 public class RootActivity extends Activity implements Callback {
@@ -18,7 +19,7 @@ public class RootActivity extends Activity implements Callback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        depth = new Depth();
+        depth = DepthBus.getDepth(this);
 
         setContentView(R.layout.activity_root);
         makeAppFullscreen();

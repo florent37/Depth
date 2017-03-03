@@ -33,10 +33,6 @@ public class TransitionHelper {
         introAnimate((DepthLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 20f, 45, 190);
         introAnimate((DepthLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 20f, 60, 200);
         introAnimate((DepthLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 20f, 75, 210).addListener(introEndListener);
-
-        root.findViewById(R.id.dl2).setVisibility(View.GONE);
-        root.findViewById(R.id.dl3).setVisibility(View.GONE);
-
     }
 
     static ObjectAnimator introAnimate(final DepthLayout target, final float moveY, final float customElevation, long delay, int subtractDelay) {

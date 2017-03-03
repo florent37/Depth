@@ -13,7 +13,7 @@ public class ViewFinalState {
     private Float finalRotationZ;
     private Float finalElevation;
 
-    public ViewFinalState() {
+    private ViewFinalState() {
     }
 
     public Float getFinalScale() {

@@ -51,6 +51,7 @@ public class EnterAnimation {
     private void introAnimate(final DepthLayout target) {
         final float density = target.getResources().getDisplayMetrics().density;
 
+        //TODO
         final float initialRotationX = TransitionHelper.TARGET_ROTATION_X;
         final float initialRotationZ = TransitionHelper.TARGET_ROTATION;
         final float initialScale = TransitionHelper.TARGET_SCALE;
