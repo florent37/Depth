@@ -60,7 +60,7 @@ public class RootActivity extends Activity implements Callback {
     public void changeFragment(final Fragment oldFragment) {
         final Fragment newFragment = (++count % 2 == 0) ? Fragment1.newInstance(true) : Fragment2.newInstance(true);
 
-        switch (count % 4){
+        switch (count % 3) {
             case 0:
                 animateDefault(oldFragment, newFragment);
                 break;
@@ -69,9 +69,6 @@ public class RootActivity extends Activity implements Callback {
                 break;
             case 2:
                 animateOnLeft(oldFragment, newFragment);
-                break;
-            case 3:
-                animateOnRightFromRight(oldFragment, newFragment);
                 break;
         }
     }
@@ -124,27 +121,6 @@ public class RootActivity extends Activity implements Callback {
                         .setInitialXPercent(1f)
                         .setInitialYPercent(0f)
                         .setInitialRotationZ(0f)
-                        .setInitialRotationX(30f)
-                )
-                .start();
-    }
-
-    private void animateOnRightFromRight(final Fragment oldFragment, final Fragment newFragment){
-        depth
-                .animate()
-                .reduce(oldFragment, new ReduceConfiguration()
-                        .setRotationZ(10f)
-                        .setRotationX(30f)
-                )
-
-                .exit(oldFragment, new ExitConfiguration()
-                        .setFinalXPercent(1f)
-                        .setFinalYPercent(0f)
-                )
-                .enter(newFragment, new EnterConfiguration()
-                        .setInitialXPercent(1f)
-                        .setInitialYPercent(0f)
-                        .setInitialRotationZ(10f)
                         .setInitialRotationX(30f)
                 )
                 .start();
