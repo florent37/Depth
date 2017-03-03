@@ -28,7 +28,7 @@ public class DepthAnimator {
 
     private Depth depth;
     private List<DepthAnimation> animations;
-    private int currentIndex;
+    private int currentIndex = -1;
 
     private List<DepthFragmentState> fragmentsState;
 
@@ -100,6 +100,7 @@ public class DepthAnimator {
     }
 
     private void startAnimation(final int index) {
+        this.currentIndex = index;
         final DepthFragmentState depthFragmentState = fragmentsState.get(index);
 
         final Fragment fragment = depthFragmentState.getFragment();
@@ -124,7 +125,7 @@ public class DepthAnimator {
 
     public void start() {
         //setup listeners
-        if (!animations.isEmpty()) {
+        if (!animations.isEmpty() && currentIndex == -1) {
             final int index = 0;
             startAnimation(index);
         }

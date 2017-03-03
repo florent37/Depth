@@ -28,5 +28,5 @@
     <color name="blueDark">#1565C0</color>
 
     <color name="colorPrimary">@color/blueLight</color>
-    <color name="colorPrimaryDark">@color/blueDark</color>
+    <color name="colorPrimaryDark">@color/blue</color>
 </resources>

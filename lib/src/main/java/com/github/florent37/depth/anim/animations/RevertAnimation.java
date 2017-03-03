@@ -29,7 +29,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
         return this;
     }
 
-    private void revertFromMenu() {
+    private void startRevert() {
         final DepthLayout target = depthLayout;
 
         final long totalDuration = revertConfiguration.getDuration();
@@ -85,7 +85,6 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             elevation.setInterpolator(new QuintInOut());
             elevation.setStartDelay(firstDelay);
             elevation.start();
-            target.setCustomShadowElevation(finalElevation * density);
         }
 
         { // scale
@@ -93,6 +92,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             scaleX.setDuration(duration);
             scaleX.setInterpolator(new CircInOut());
             scaleX.setStartDelay(firstDelay);
+            scaleX.addListener(listener);
             scaleX.start();
             //target.setScaleX(TransitionHelper.TARGET_SCALE);
 
@@ -108,7 +108,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
 
     @Override
     public void start() {
-        revertFromMenu();
+        startRevert();
     }
 
 

@@ -44,7 +44,9 @@ public class Depth {
     }
 
     public DepthAnimator animate() {
-        this.depthAnimator = new DepthAnimator(this);
+        if(depthAnimator == null) {
+            this.depthAnimator = new DepthAnimator(this);
+        }
         return depthAnimator;
     }
 

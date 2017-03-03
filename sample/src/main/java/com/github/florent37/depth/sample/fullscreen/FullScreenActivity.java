@@ -40,7 +40,7 @@ public class FullScreenActivity extends Activity implements FragmentCallback {
         //      }
         //  });
 
-        setContentView(R.layout.activity_root);
+        setContentView(R.layout.activity_fullscreen);
         makeAppFullscreen();
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();
