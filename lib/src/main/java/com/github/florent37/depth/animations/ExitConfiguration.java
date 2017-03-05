@@ -1,4 +1,4 @@
-package com.github.florent37.depth.anim.animations;
+package com.github.florent37.depth.animations;
 
 import android.support.annotation.FloatRange;
 

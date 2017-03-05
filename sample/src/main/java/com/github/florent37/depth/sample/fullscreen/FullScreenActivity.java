@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.github.florent37.depth.anim.Depth;
-import com.github.florent37.depth.anim.DepthProvider;
-import com.github.florent37.depth.anim.animations.EnterConfiguration;
-import com.github.florent37.depth.anim.animations.ExitConfiguration;
-import com.github.florent37.depth.anim.animations.ReduceConfiguration;
+import com.github.florent37.depth.Depth;
+import com.github.florent37.depth.DepthProvider;
+import com.github.florent37.depth.animations.EnterConfiguration;
+import com.github.florent37.depth.animations.ExitConfiguration;
+import com.github.florent37.depth.animations.ReduceConfiguration;
 import com.github.florent37.depth.sample.R;
 
 public class FullScreenActivity extends AppCompatActivity implements FragmentCallback {

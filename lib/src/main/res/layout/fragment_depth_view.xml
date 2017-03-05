@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<no.agens.depth.lib.DepthRendrer xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.florent37.depth.DepthRendrer xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layerType="hardware"
     >
 
-    <no.agens.depth.lib.DepthLayout
+    <com.github.florent37.depth.DepthLayout
         android:id="@+id/root_depth_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,5 +14,5 @@
 
         <!-- CONTENT HERE -->
 
-    </no.agens.depth.lib.DepthLayout>
-</no.agens.depth.lib.DepthRendrer>
+    </com.github.florent37.depth.DepthLayout>
+</com.github.florent37.depth.DepthRendrer>

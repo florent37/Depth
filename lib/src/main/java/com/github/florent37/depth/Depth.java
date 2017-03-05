@@ -1,4 +1,4 @@
-package com.github.florent37.depth.anim;
+package com.github.florent37.depth;
 
 import android.content.Context;
 import android.support.annotation.FloatRange;
@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.github.florent37.depth.anim.animations.DepthAnimation;
+import com.github.florent37.depth.animations.DepthAnimation;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

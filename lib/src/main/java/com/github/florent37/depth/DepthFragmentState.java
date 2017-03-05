@@ -1,4 +1,4 @@
-package com.github.florent37.depth.anim;
+package com.github.florent37.depth;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

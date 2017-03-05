@@ -1,11 +1,11 @@
-package com.github.florent37.depth.anim.animations;
+package com.github.florent37.depth.animations;
 
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-import com.github.florent37.depth.anim.TransitionHelper;
+import com.github.florent37.depth.DepthLayout;
+import com.github.florent37.depth.TransitionHelper;
 
-import no.agens.depth.lib.DepthLayout;
 import no.agens.depth.lib.tween.interpolators.CircInOut;
 import no.agens.depth.lib.tween.interpolators.ExpoOut;
 import no.agens.depth.lib.tween.interpolators.QuadInOut;
@@ -26,9 +26,8 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
         return this;
     }
 
-    private void introAnimate() {
-        final DepthLayout target = this.depthLayout;
-
+    @Override
+    public void prepareAnimators(DepthLayout target) {
         final float density = target.getResources().getDisplayMetrics().density;
 
         final float initialElevation = this.enterConfiguration.getInitialElevation() * density;
@@ -64,13 +63,13 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             final ObjectAnimator translationY2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, initialTranslationY, finalTranslationY);
             translationY2.setDuration(firstTranslationDuration);
             translationY2.setInterpolator(new ExpoOut());
-            translationY2.start();
+            add(translationY2);
 
             target.setTranslationX(initialTranslationX);
             final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, initialTranslationX, finalTranslationX);
             translationX2.setDuration(firstTranslationDuration);
             translationX2.setInterpolator(new ExpoOut());
-            translationX2.start();
+            add(translationX2);
         }
 
         { //rotation
@@ -80,14 +79,14 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             rotationX.setDuration(rotationX_shadow_scale_duration);
             rotationX.setInterpolator(new QuintInOut());
             rotationX.setStartDelay(scale_shadow_rotationX_startDelay);
-            rotationX.start();
+            add(rotationX);
 
             target.setRotation(initialRotationZ);
             final ObjectAnimator rotation = ObjectAnimator.ofFloat(target, View.ROTATION, initialRotationZ, finalRotationZ);
             rotation.setDuration(rotationZ_duration);
             rotation.setInterpolator(new QuadInOut());
             rotation.setStartDelay(rotationZ_startDelay);
-            rotation.start();
+            add(rotation);
         }
 
 
@@ -97,7 +96,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             elevation.setDuration(rotationX_shadow_scale_duration);
             elevation.setInterpolator(new QuintInOut());
             elevation.setStartDelay(scale_shadow_rotationX_startDelay);
-            elevation.start();
+            add(elevation);
         }
 
         { //enlarge
@@ -106,7 +105,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             scaleX.setDuration(rotationX_shadow_scale_duration);
             scaleX.setInterpolator(new CircInOut());
             scaleX.setStartDelay(scale_shadow_rotationX_startDelay);
-            scaleX.start();
+            add(scaleX);
 
             target.setScaleY(initialScale);
             final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, initialScale, finalScaleY);
@@ -114,13 +113,8 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             scaleY.setInterpolator(new CircInOut());
             scaleY.setStartDelay(scale_shadow_rotationX_startDelay);
             scaleY.addListener(listener);
-            scaleY.start();
+            add(scaleY);
         }
-    }
-
-    @Override
-    public void start() {
-        introAnimate();
     }
 
 }

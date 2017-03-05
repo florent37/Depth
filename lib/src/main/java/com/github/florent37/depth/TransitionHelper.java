@@ -1,4 +1,4 @@
-package com.github.florent37.depth.anim;
+package com.github.florent37.depth;
 
 import android.animation.TimeInterpolator;
 import android.view.View;

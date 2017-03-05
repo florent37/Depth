@@ -1,24 +1,22 @@
-package com.github.florent37.depth.anim;
+package com.github.florent37.depth;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.support.v4.app.Fragment;
 
 import com.gihub.florent37.depth.R;
-import com.github.florent37.depth.anim.animations.DepthAnimation;
-import com.github.florent37.depth.anim.animations.EnterAnimation;
-import com.github.florent37.depth.anim.animations.EnterConfiguration;
-import com.github.florent37.depth.anim.animations.ExitAnimation;
-import com.github.florent37.depth.anim.animations.ExitConfiguration;
-import com.github.florent37.depth.anim.animations.ReduceAnimation;
-import com.github.florent37.depth.anim.animations.ReduceConfiguration;
-import com.github.florent37.depth.anim.animations.RevertAnimation;
-import com.github.florent37.depth.anim.animations.RevertConfiguration;
+import com.github.florent37.depth.animations.DepthAnimation;
+import com.github.florent37.depth.animations.EnterAnimation;
+import com.github.florent37.depth.animations.EnterConfiguration;
+import com.github.florent37.depth.animations.ExitAnimation;
+import com.github.florent37.depth.animations.ExitConfiguration;
+import com.github.florent37.depth.animations.ReduceAnimation;
+import com.github.florent37.depth.animations.ReduceConfiguration;
+import com.github.florent37.depth.animations.RevertAnimation;
+import com.github.florent37.depth.animations.RevertConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import no.agens.depth.lib.DepthLayout;
 
 /**
  * Created by florentchampigny on 03/03/2017.

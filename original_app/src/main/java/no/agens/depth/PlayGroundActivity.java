@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-import no.agens.depth.lib.DepthLayout;
+import com.github.florent37.depth.DepthLayout;
+
 import no.agens.depth.lib.MaterialMenuDrawable;
 
 public class PlayGroundActivity extends Activity {

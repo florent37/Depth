@@ -1,11 +1,9 @@
-package com.github.florent37.depth.anim;
+package com.github.florent37.depth;
 
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.gihub.florent37.depth.R;
-
-import no.agens.depth.lib.DepthLayout;
 
 /**
  * Created by florentchampigny on 02/03/2017.

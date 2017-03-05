@@ -1,29 +1,29 @@
-package com.github.florent37.depth.anim.animations;
+package com.github.florent37.depth.animations;
 
 /**
  * Created by florentchampigny on 03/03/2017.
  */
-public class RevertConfiguration {
+public class ReduceConfiguration {
 
-    private long duration = 1100l;
-
-    private float elevation = 30f;
-    private float rotationX = 0f;
-    private float rotationZ = 0f;
-    private float translationY = 0f;
+    private float scale = 0.5f;
     private float translationX = 0;
-    private float scale = 1f;
+    private float translationY = 0;
+    private float rotationX = 60f;
+    private float rotationZ = -50f;
+    private float elevation = 30f;
+
+    private long duration = 1600l;
 
     public long getDuration() {
         return duration;
     }
 
-    public RevertConfiguration setDuration(long duration) {
+    public ReduceConfiguration setDuration(long duration) {
         this.duration = duration;
         return this;
     }
 
-    public RevertConfiguration setScale(float scale) {
+    public ReduceConfiguration setScale(float scale) {
         this.scale = scale;
         return this;
     }
@@ -32,11 +32,11 @@ public class RevertConfiguration {
         return scale;
     }
 
-    float getTranslationX() {
+    public float getTranslationX() {
         return translationX;
     }
 
-    public RevertConfiguration setTranslationX(float translationX) {
+    public ReduceConfiguration setTranslationX(float translationX) {
         this.translationX = translationX;
         return this;
     }
@@ -45,7 +45,7 @@ public class RevertConfiguration {
         return translationY;
     }
 
-    public RevertConfiguration setTranslationY(float translationY) {
+    public ReduceConfiguration setTranslationY(float translationY) {
         this.translationY = translationY;
         return this;
     }
@@ -54,7 +54,7 @@ public class RevertConfiguration {
         return rotationX;
     }
 
-    public RevertConfiguration setRotationX(float rotationX) {
+    public ReduceConfiguration setRotationX(float rotationX) {
         this.rotationX = rotationX;
         return this;
     }
@@ -63,19 +63,17 @@ public class RevertConfiguration {
         return rotationZ;
     }
 
-    public RevertConfiguration setRotationZ(float rotationZ) {
+    public ReduceConfiguration setRotationZ(float rotationZ) {
         this.rotationZ = rotationZ;
         return this;
     }
 
-    float getElevation() {
+    public float getElevation() {
         return elevation;
     }
 
-    public RevertConfiguration setElevation(float elevation) {
+    public ReduceConfiguration setElevation(float elevation) {
         this.elevation = elevation;
         return this;
     }
-
-
 }

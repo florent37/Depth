@@ -1,8 +1,8 @@
-package com.github.florent37.depth.anim;
+package com.github.florent37.depth;
 
 import android.support.v4.app.Fragment;
 
-import com.github.florent37.depth.anim.animations.DepthAnimation;
+import com.github.florent37.depth.animations.DepthAnimation;
 
 /**
  * Created by florentchampigny on 03/03/2017.

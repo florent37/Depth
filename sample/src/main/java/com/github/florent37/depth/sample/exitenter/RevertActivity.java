@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.github.florent37.depth.anim.Depth;
-import com.github.florent37.depth.anim.DepthProvider;
+import com.github.florent37.depth.Depth;
+import com.github.florent37.depth.DepthProvider;
 import com.github.florent37.depth.sample.R;
 
 public class RevertActivity extends AppCompatActivity implements FragmentCallback {

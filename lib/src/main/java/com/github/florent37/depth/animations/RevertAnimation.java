@@ -1,11 +1,11 @@
-package com.github.florent37.depth.anim.animations;
+package com.github.florent37.depth.animations;
 
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-import com.github.florent37.depth.anim.TransitionHelper;
+import com.github.florent37.depth.DepthLayout;
+import com.github.florent37.depth.TransitionHelper;
 
-import no.agens.depth.lib.DepthLayout;
 import no.agens.depth.lib.tween.interpolators.BackOut;
 import no.agens.depth.lib.tween.interpolators.CircInOut;
 import no.agens.depth.lib.tween.interpolators.QuintInOut;
@@ -29,9 +29,8 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
         return this;
     }
 
-    private void startRevert() {
-        final DepthLayout target = depthLayout;
-
+    @Override
+    public void prepareAnimators(DepthLayout target) {
         final long totalDuration = revertConfiguration.getDuration();
 
         final float density = target.getResources().getDisplayMetrics().density;
@@ -56,26 +55,26 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             translationY.setDuration(translationDuration);
             translationY.setInterpolator(new BackOut());
             translationY.setStartDelay((long) (duration * 0.25f + firstDelay));
-            translationY.start();
+            add(translationY);
 
             final ObjectAnimator translationX = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, finalTranslationX);
             translationX.setDuration(translationDuration);
             translationX.setInterpolator(new BackOut());
             translationX.setStartDelay((long) (duration * 0.25f + firstDelay));
-            translationX.start();
+            add(translationX);
         }
 
         { //rotation
             final ObjectAnimator rotation = ObjectAnimator.ofFloat(target, View.ROTATION, target.getRotation(), finalRotationZ);
             rotation.setDuration(totalDuration);
             rotation.setInterpolator(new QuintInOut());
-            rotation.start();
+            add(rotation);
 
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, target.getRotationX(), finalRotationX);
             rotationX.setDuration(duration);
             rotationX.setInterpolator(new QuintInOut());
             rotationX.setStartDelay(firstDelay);
-            rotationX.start();
+            add(rotationX);
 //            target.setRotationX(TransitionHelper.TARGET_ROTATION_X);
         }
 
@@ -84,7 +83,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             elevation.setDuration(duration);
             elevation.setInterpolator(new QuintInOut());
             elevation.setStartDelay(firstDelay);
-            elevation.start();
+            add(elevation);
         }
 
         { // scale
@@ -93,23 +92,17 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             scaleX.setInterpolator(new CircInOut());
             scaleX.setStartDelay(firstDelay);
             scaleX.addListener(listener);
-            scaleX.start();
+            add(scaleX);
             //target.setScaleX(TransitionHelper.TARGET_SCALE);
 
             final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, target.getScaleY(), finalScale);
             scaleY.setDuration(duration);
             scaleY.setInterpolator(new CircInOut());
             scaleY.setStartDelay(firstDelay);
-            scaleY.start();
+            add(scaleY);
             //target.setScaleY(TransitionHelper.TARGET_SCALE);
         }
 
     }
-
-    @Override
-    public void start() {
-        startRevert();
-    }
-
 
 }

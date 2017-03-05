@@ -2,9 +2,7 @@
 <resources>
 
     <declare-styleable name="DepthLayout">
-
         <attr name="is_circle" format="boolean"/>
-
         <attr name="edge_color" format="color"/>
         <attr name="depth" format="dimension"/>
         <attr name="custom_elevation" format="dimension"/>

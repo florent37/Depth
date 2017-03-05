@@ -352,7 +352,7 @@ public class MaterialMenuDrawable extends Drawable implements Animatable {
                     // rotate until required angle
                     rotation = ratio * ARROW_BOT_LINE_ANGLE;
                 } else {
-                    // rotate back to start doing a 360
+                    // rotate back to prepareAnimators doing a 360
                     rotation = ARROW_BOT_LINE_ANGLE + (1 - ratio) * ARROW_TOP_LINE_ANGLE;
                 }
                 // rotate by middle
@@ -447,7 +447,7 @@ public class MaterialMenuDrawable extends Drawable implements Animatable {
                     // rotate to required angle
                     rotation = ARROW_TOP_LINE_ANGLE * ratio;
                 } else {
-                    // rotate back to start doing a 360
+                    // rotate back to prepareAnimators doing a 360
                     rotation = ARROW_TOP_LINE_ANGLE + (1 - ratio) * ARROW_BOT_LINE_ANGLE;
                 }
                 // pivot center of canvas

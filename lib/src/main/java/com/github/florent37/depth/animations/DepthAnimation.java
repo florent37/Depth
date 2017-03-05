@@ -1,9 +1,12 @@
-package com.github.florent37.depth.anim.animations;
+package com.github.florent37.depth.animations;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 
-import no.agens.depth.lib.DepthLayout;
+import com.github.florent37.depth.DepthLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by florentchampigny on 03/03/2017.
@@ -12,6 +15,7 @@ import no.agens.depth.lib.DepthLayout;
 public abstract class DepthAnimation<THIS> {
 
     protected DepthLayout depthLayout;
+    protected List<Animator> animators = new ArrayList<>();
 
     protected Animator.AnimatorListener listener = new AnimatorListenerAdapter() {};
 
@@ -25,6 +29,18 @@ public abstract class DepthAnimation<THIS> {
         return (THIS)this;
     }
 
-    public abstract void start();
+    public abstract void prepareAnimators(DepthLayout target);
+
+    protected void add(Animator animator){
+        this.animators.add(animator);
+    }
+
+    public void start(){
+        prepareAnimators(depthLayout);
+
+        for(Animator animator : animators){
+            animator.start();
+        }
+    }
 
 }

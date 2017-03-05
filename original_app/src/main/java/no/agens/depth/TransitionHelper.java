@@ -7,7 +7,8 @@ import android.animation.ValueAnimator;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import no.agens.depth.lib.DepthLayout;
+import com.github.florent37.depth.DepthLayout;
+
 import no.agens.depth.lib.tween.interpolators.BackOut;
 import no.agens.depth.lib.tween.interpolators.CircInOut;
 import no.agens.depth.lib.tween.interpolators.ExpoIn;

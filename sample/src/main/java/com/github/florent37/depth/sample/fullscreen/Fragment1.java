@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.florent37.depth.anim.Depth;
-import com.github.florent37.depth.anim.DepthProvider;
+import com.github.florent37.depth.Depth;
+import com.github.florent37.depth.DepthProvider;
 import com.github.florent37.depth.sample.R;
 
 import butterknife.ButterKnife;

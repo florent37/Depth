@@ -1,8 +1,10 @@
-package com.github.florent37.depth.anim.animations;
+package com.github.florent37.depth.animations;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.view.View;
+
+import com.github.florent37.depth.DepthLayout;
 
 import no.agens.depth.lib.tween.interpolators.ExpoIn;
 
@@ -21,13 +23,8 @@ public class ExitAnimation extends DepthAnimation<ExitAnimation> {
         return this;
     }
 
-    //call after reduce
     @Override
-    public void start() {
-        exitAnim();
-    }
-
-    private void exitAnim() {
+    public void prepareAnimators(DepthLayout depthLayout) {
         final View target = this.depthLayout;
 
         final TimeInterpolator interpolator = new ExpoIn();
@@ -42,11 +39,11 @@ public class ExitAnimation extends DepthAnimation<ExitAnimation> {
         //translationY2.setInterpolator(new AccelerateInterpolator());
         translationY2.setInterpolator(interpolator);
         translationY2.addListener(listener);
-        translationY2.start();
+        add(translationY2);
 
         final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, finalTranslationX);
         translationX2.setDuration(totalDuration);
         translationX2.setInterpolator(interpolator);
-        translationX2.start();
+        add(translationX2);
     }
 }
