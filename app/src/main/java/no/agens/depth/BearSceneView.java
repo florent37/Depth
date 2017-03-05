@@ -134,7 +134,7 @@ public class BearSceneView extends View {
 
     int index = 0;
 
-    void addThree(Bitmap bitmap,float x, float y, float scale, float alpha) {
+    void addThree(Bitmap bitmap, float x, float y, float scale, float alpha) {
 
         renderables[index] = new RenderableThree(bitmap, x, y, alpha);
         renderables[index].setScale(scale, scale);
