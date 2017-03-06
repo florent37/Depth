@@ -63,7 +63,6 @@ depth
 ```
 
 [![gif](https://raw.githubusercontent.com/florent37/Depth/master/media/top.gif)](https://github.com/florent37/Depth)
-
 [![gif](https://raw.githubusercontent.com/florent37/Depth/master/media/left.gif)](https://github.com/florent37/Depth)
 
 # Add multiples DepthLayouts
