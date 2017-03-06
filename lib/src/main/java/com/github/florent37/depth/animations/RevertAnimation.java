@@ -30,7 +30,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
     }
 
     @Override
-    public void prepareAnimators(DepthRelativeLayout target, int index) {
+    public void prepareAnimators(DepthRelativeLayout target, int index, int animationDelay) {
         final long totalDuration = revertConfiguration.getDuration();
 
         final float density = target.getResources().getDisplayMetrics().density;

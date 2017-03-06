@@ -178,6 +178,8 @@ public class DepthAnimator {
 
                 depth.addFragment(depthFragmentState.getFragment());
             }
+        } else {
+            DepthLogger.log("fragment null");
         }
     }
 

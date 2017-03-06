@@ -23,7 +23,7 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
     }
 
     @Override
-    public void prepareAnimators(DepthRelativeLayout target, int index) {
+    public void prepareAnimators(DepthRelativeLayout target, int index, int animationDelay) {
 
         final TimeInterpolator interpolator = TransitionHelper.interpolator;
         final float density = target.getResources().getDisplayMetrics().density;
@@ -47,12 +47,14 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, finalRotationX);
             rotationX.setDuration(duration);
             rotationX.setInterpolator(interpolator);
+            rotationX.setStartDelay(animationDelay);
             attachListener(rotationX);
             add(rotationX);
 
             final ObjectAnimator rotation = ObjectAnimator.ofFloat(target, View.ROTATION, finalRotationZ);
             rotation.setDuration(totalDuration);
             rotation.setInterpolator(interpolator);
+            rotation.setStartDelay(animationDelay);
             add(rotation);
         }
 
@@ -60,6 +62,7 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
             final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", target.getCustomShadowElevation(), finalElevation);
             elevation.setDuration(duration);
             elevation.setInterpolator(interpolator);
+            elevation.setStartDelay(animationDelay);
             add(elevation);
         }
 
@@ -68,11 +71,13 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
             final ObjectAnimator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, finalScale);
             scaleX.setDuration(duration);
             scaleX.setInterpolator(interpolator);
+            scaleX.setStartDelay(animationDelay);
             add(scaleX);
 
             final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, finalScale);
             scaleY.setDuration(duration);
             scaleY.setInterpolator(interpolator);
+            scaleY.setStartDelay(animationDelay);
             add(scaleY);
         }
 
@@ -81,6 +86,7 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
             final ObjectAnimator translationY = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, finalTranslationY);
             translationY.setDuration(translationDuration);
             translationY.setInterpolator(interpolator);
+            translationY.setStartDelay(animationDelay);
             add(translationY);
         }
 

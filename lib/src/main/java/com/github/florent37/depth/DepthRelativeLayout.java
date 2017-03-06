@@ -58,6 +58,10 @@ public class DepthRelativeLayout extends RelativeLayout {
         return depthIndex;
     }
 
+    public int getAnimationDelay() {
+        return animationDelay;
+    }
+
     @Override
     public boolean hasOverlappingRendering() {
         return false;

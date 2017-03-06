@@ -26,7 +26,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
     }
 
     @Override
-    public void prepareAnimators(DepthRelativeLayout target, int index) {
+    public void prepareAnimators(DepthRelativeLayout target, int index, int animationDelay) {
         final float density = target.getResources().getDisplayMetrics().density;
         final int screenHeightPixels = target.getResources().getDisplayMetrics().heightPixels;
         final int screenWidthPixel = target.getResources().getDisplayMetrics().widthPixels;
@@ -63,6 +63,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             target.setTranslationY(initialTranslationY);
             final ObjectAnimator translationY2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, initialTranslationY, finalTranslationY);
             translationY2.setDuration(firstTranslationDuration);
+            translationY2.setStartDelay(animationDelay);
             translationY2.setInterpolator(new ExpoOut());
             add(translationY2);
 
@@ -70,6 +71,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, initialTranslationX, finalTranslationX);
             translationX2.setDuration(firstTranslationDuration);
             translationX2.setInterpolator(new ExpoOut());
+            translationX2.setStartDelay(animationDelay);
             add(translationX2);
         }
 
@@ -79,14 +81,14 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, initialRotationX, finalRotationX);
             rotationX.setDuration(rotationX_shadow_scale_duration);
             rotationX.setInterpolator(new QuintInOut());
-            rotationX.setStartDelay(scale_shadow_rotationX_startDelay);
+            rotationX.setStartDelay(scale_shadow_rotationX_startDelay + animationDelay);
             add(rotationX);
 
             target.setRotation(initialRotationZ);
             final ObjectAnimator rotation = ObjectAnimator.ofFloat(target, View.ROTATION, initialRotationZ, finalRotationZ);
             rotation.setDuration(rotationZ_duration);
             rotation.setInterpolator(new QuadInOut());
-            rotation.setStartDelay(rotationZ_startDelay);
+            rotation.setStartDelay(rotationZ_startDelay + animationDelay);
             add(rotation);
         }
 
@@ -96,7 +98,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             final ObjectAnimator elevation = ObjectAnimator.ofFloat(target, "CustomShadowElevation", initialElevation, finalElevation);
             elevation.setDuration(rotationX_shadow_scale_duration);
             elevation.setInterpolator(new QuintInOut());
-            elevation.setStartDelay(scale_shadow_rotationX_startDelay);
+            elevation.setStartDelay(scale_shadow_rotationX_startDelay + animationDelay * 2);
             add(elevation);
         }
 
@@ -105,14 +107,14 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             final ObjectAnimator scaleX = ObjectAnimator.ofFloat(target, View.SCALE_X, initialScale, finalScaleX);
             scaleX.setDuration(rotationX_shadow_scale_duration);
             scaleX.setInterpolator(new CircInOut());
-            scaleX.setStartDelay(scale_shadow_rotationX_startDelay);
+            scaleX.setStartDelay(scale_shadow_rotationX_startDelay + animationDelay);
             add(scaleX);
 
             target.setScaleY(initialScale);
             final ObjectAnimator scaleY = ObjectAnimator.ofFloat(target, View.SCALE_Y, initialScale, finalScaleY);
             scaleY.setDuration(rotationX_shadow_scale_duration);
             scaleY.setInterpolator(new CircInOut());
-            scaleY.setStartDelay(scale_shadow_rotationX_startDelay);
+            scaleY.setStartDelay(scale_shadow_rotationX_startDelay + animationDelay);
             attachListener(scaleY);
             add(scaleY);
         }

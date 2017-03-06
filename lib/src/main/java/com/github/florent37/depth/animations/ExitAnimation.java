@@ -24,7 +24,7 @@ public class ExitAnimation extends DepthAnimation<ExitAnimation> {
     }
 
     @Override
-    public void prepareAnimators(DepthRelativeLayout target, int index) {
+    public void prepareAnimators(DepthRelativeLayout target, int index, int animationDelay) {
         final TimeInterpolator interpolator = new ExpoIn();
 
         final float finalTranslationY = exitConfiguration.getFinalYPercent() * target.getResources().getDisplayMetrics().heightPixels;
@@ -36,12 +36,14 @@ public class ExitAnimation extends DepthAnimation<ExitAnimation> {
         translationY2.setDuration(totalDuration);
         //translationY2.setInterpolator(new AccelerateInterpolator());
         translationY2.setInterpolator(interpolator);
+        translationY2.setStartDelay(animationDelay);
         attachListener(translationY2);
         add(translationY2);
 
         final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, finalTranslationX);
         translationX2.setDuration(totalDuration);
         translationX2.setInterpolator(interpolator);
+        translationX2.setStartDelay(animationDelay);
         add(translationX2);
     }
 }

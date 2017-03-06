@@ -38,22 +38,6 @@
     </com.github.florent37.depth.DepthRelativeLayout>
 
     <com.github.florent37.depth.DepthRelativeLayout
-        android:id="@+id/status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:depth_value="2dp"
-        app:depth_edgeColor="@color/colorPrimaryDark"
-        app:depth_zIndex="1">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:background="@color/colorPrimaryDark"
-            android:elevation="1dp" />
-
-    </com.github.florent37.depth.DepthRelativeLayout>
-
-    <com.github.florent37.depth.DepthRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/status_bar"
@@ -61,11 +45,17 @@
         app:depth_value="2dp"
         app:depth_zIndex="1">
 
+        <View
+            android:id="@+id/status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@color/colorPrimaryDark" />
+
         <com.github.florent37.awesomebar.AwesomeBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            android:elevation="1dp"
+            android:layout_below="@+id/status_bar"
             app:bar_animatedIcons="false"
             app:bar_primaryColor="@color/colorPrimary"
             app:bar_primaryDarkColor="@color/colorPrimaryDark" />

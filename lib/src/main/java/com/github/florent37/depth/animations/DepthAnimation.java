@@ -45,7 +45,7 @@ public abstract class DepthAnimation<THIS> {
         return (THIS) this;
     }
 
-    public abstract void prepareAnimators(DepthRelativeLayout target, int index);
+    public abstract void prepareAnimators(DepthRelativeLayout target, int index, int animationDelay);
 
     protected void add(Animator animator) {
         this.animators.add(animator);
@@ -59,7 +59,7 @@ public abstract class DepthAnimation<THIS> {
                 final View child = depthLayoutContainer.getChildAt(i);
                 if (child instanceof DepthRelativeLayout) {
                     final DepthRelativeLayout depthRelativeLayout = (DepthRelativeLayout) child;
-                    prepareAnimators((DepthRelativeLayout) child, depthRelativeLayout.getDepthIndex());
+                    prepareAnimators((DepthRelativeLayout) child, depthRelativeLayout.getDepthIndex(), depthRelativeLayout.getAnimationDelay());
                 }
             }
 
