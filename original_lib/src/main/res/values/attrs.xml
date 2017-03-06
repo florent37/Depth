@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DepthRelativeLayout">
+        <attr name="depth_isCircle" format="boolean"/>
+        <attr name="depth_edgeColor" format="color"/>
+        <attr name="depth_value" format="dimension"/>
+        <attr name="depth_elevation" format="dimension"/>
+        <attr name="depth_zIndex" format="integer"/>
+    </declare-styleable>
+
+</resources>
