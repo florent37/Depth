@@ -11,13 +11,13 @@ import com.gihub.florent37.depth.R;
 
 public class FragmentDepthView extends FrameLayout {
 
-    private final DepthLayout depthLayout;
+    private final DepthRelativeLayout depthLayout;
 
     public FragmentDepthView(View fragmentView, Float depth, Float elevation) {
         super(fragmentView.getContext());
         inflate(getContext(), R.layout.fragment_depth_view, this);
 
-        depthLayout = (DepthLayout) findViewById(R.id.root_depth_layout);
+        depthLayout = (DepthRelativeLayout) findViewById(R.id.root_depth_layout);
         if (depth != null) {
             depthLayout.setDepth(depth * getResources().getDisplayMetrics().density);
         }

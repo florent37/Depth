@@ -4,7 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.view.View;
 
-import com.github.florent37.depth.DepthLayout;
+import com.github.florent37.depth.DepthRelativeLayout;
 import com.github.florent37.depth.TransitionHelper;
 
 /**
@@ -23,7 +23,7 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
     }
 
     @Override
-    public void prepareAnimators(DepthLayout target) {
+    public void prepareAnimators(DepthRelativeLayout target, int index) {
 
         final TimeInterpolator interpolator = TransitionHelper.interpolator;
         final float density = target.getResources().getDisplayMetrics().density;
@@ -37,7 +37,7 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
         final long duration = (long) (totalDuration * 0.7f);
         final long translationDuration = (long) (0.125 * totalDuration);
 
-        final float finalTranslationY = reduceConfiguration.getTranslationY() * density;
+        final float finalTranslationY = (index * -1 * 8) * density + reduceConfiguration.getTranslationY() * density;
         final float finalElevation = reduceConfiguration.getElevation() * density;
         final float finalScale = reduceConfiguration.getScale();
         final float finalRotationX = reduceConfiguration.getRotationX();
@@ -47,7 +47,7 @@ public class ReduceAnimation extends DepthAnimation<ReduceAnimation> {
             final ObjectAnimator rotationX = ObjectAnimator.ofFloat(target, View.ROTATION_X, finalRotationX);
             rotationX.setDuration(duration);
             rotationX.setInterpolator(interpolator);
-            rotationX.addListener(listener);
+            attachListener(rotationX);
             add(rotationX);
 
             final ObjectAnimator rotation = ObjectAnimator.ofFloat(target, View.ROTATION, finalRotationZ);

@@ -8,12 +8,11 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-import no.agens.depth.lib.MathHelper;
-import no.agens.depth.lib.headers.AuraDrawable;
-import no.agens.depth.lib.headers.NoiseEffect;
-import no.agens.depth.lib.headers.ParticleSystem;
-import no.agens.depth.lib.headers.Renderable;
-import no.agens.depth.lib.tween.FrameRateCounter;
+import no.agens.depth.headers.AuraDrawable;
+import no.agens.depth.headers.NoiseEffect;
+import no.agens.depth.headers.ParticleSystem;
+import no.agens.depth.headers.Renderable;
+import com.github.florent37.depth.lib.tween.FrameRateCounter;
 
 /**
  * Created by danielzeller on 01.10.14.

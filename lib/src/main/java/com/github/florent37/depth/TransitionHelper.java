@@ -3,7 +3,7 @@ package com.github.florent37.depth;
 import android.animation.TimeInterpolator;
 import android.view.View;
 
-import no.agens.depth.lib.tween.interpolators.QuintOut;
+import com.github.florent37.depth.lib.tween.interpolators.QuintOut;
 
 public class TransitionHelper {
 

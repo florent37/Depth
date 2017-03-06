@@ -3,13 +3,12 @@ package com.github.florent37.depth.animations;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-import com.github.florent37.depth.DepthLayout;
+import com.github.florent37.depth.DepthRelativeLayout;
 import com.github.florent37.depth.TransitionHelper;
-
-import no.agens.depth.lib.tween.interpolators.CircInOut;
-import no.agens.depth.lib.tween.interpolators.ExpoOut;
-import no.agens.depth.lib.tween.interpolators.QuadInOut;
-import no.agens.depth.lib.tween.interpolators.QuintInOut;
+import com.github.florent37.depth.lib.tween.interpolators.CircInOut;
+import com.github.florent37.depth.lib.tween.interpolators.ExpoOut;
+import com.github.florent37.depth.lib.tween.interpolators.QuadInOut;
+import com.github.florent37.depth.lib.tween.interpolators.QuintInOut;
 
 /**
  * Created by florentchampigny on 02/03/2017.
@@ -27,8 +26,10 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
     }
 
     @Override
-    public void prepareAnimators(DepthLayout target) {
+    public void prepareAnimators(DepthRelativeLayout target, int index) {
         final float density = target.getResources().getDisplayMetrics().density;
+        final int screenHeightPixels = target.getResources().getDisplayMetrics().heightPixels;
+        final int screenWidthPixel = target.getResources().getDisplayMetrics().widthPixels;
 
         final float initialElevation = this.enterConfiguration.getInitialElevation() * density;
         final long totalDuration = this.enterConfiguration.getDuration();
@@ -36,8 +37,8 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
         final float initialRotationX = this.enterConfiguration.getInitialRotationX();
         final float initialRotationZ = this.enterConfiguration.getInitialRotationZ();
 
-        final float initialTranslationY = this.enterConfiguration.getInitialYPercent() * target.getResources().getDisplayMetrics().heightPixels;
-        final float initialTranslationX = this.enterConfiguration.getInitialXPercent() * target.getResources().getDisplayMetrics().widthPixels;
+        final float initialTranslationY = this.enterConfiguration.getInitialYPercent() * screenHeightPixels;
+        final float initialTranslationX = this.enterConfiguration.getInitialXPercent() * screenWidthPixel;
 
         target.setPivotY(TransitionHelper.getDistanceToCenter(target));
         target.setPivotX(TransitionHelper.getDistanceToCenterX(target));
@@ -112,7 +113,7 @@ public class EnterAnimation extends DepthAnimation<EnterAnimation> {
             scaleY.setDuration(rotationX_shadow_scale_duration);
             scaleY.setInterpolator(new CircInOut());
             scaleY.setStartDelay(scale_shadow_rotationX_startDelay);
-            scaleY.addListener(listener);
+            attachListener(scaleY);
             add(scaleY);
         }
     }

@@ -1,4 +1,4 @@
-<no.agens.depth.lib.DepthRendrer xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.florent37.depth.DepthRelativeLayoutContainer xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
 
     >
 
-    <no.agens.depth.lib.DepthLayout
+    <com.github.florent37.depth.DepthRelativeLayout
         android:id="@+id/root_dl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,16 +23,16 @@
             android:layout_height="180dp"
             android:background="@drawable/water_scene_background"
             />
-    </no.agens.depth.lib.DepthLayout>
+    </com.github.florent37.depth.DepthRelativeLayout>
 
 
-    <no.agens.depth.lib.DepthLayout
+    <com.github.florent37.depth.DepthRelativeLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/appbar_height"
         android:background="@color/blue"
         android:layerType="hardware"
-        app:edge_color="@color/black"
+        app:depth_edgeColor="@color/black"
         >
 
 
@@ -65,7 +65,7 @@
             android:textSize="18sp"
             android:fitsSystemWindows="true"
             />
-    </no.agens.depth.lib.DepthLayout>
+    </com.github.florent37.depth.DepthRelativeLayout>
     <ImageView
         android:id="@+id/actionbar_shadow"
         android:layout_width="match_parent"
@@ -73,13 +73,13 @@
         android:layout_below="@+id/appbar"
         android:background="@drawable/actionbar_shadow"
         />
-    <no.agens.depth.lib.DepthLayout
+    <com.github.florent37.depth.DepthRelativeLayout
         android:id="@+id/dl2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="260dp"
         android:background="@color/white"
-        app:custom_elevation="1dp"
+        app:depth_elevation="1dp"
         android:layerType="hardware"
         >
 
@@ -139,15 +139,15 @@
 
 
         </LinearLayout>
-    </no.agens.depth.lib.DepthLayout>
+    </com.github.florent37.depth.DepthRelativeLayout>
 
-    <no.agens.depth.lib.DepthLayout
+    <com.github.florent37.depth.DepthRelativeLayout
         android:id="@+id/dl3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="450dp"
         android:background="@color/white"
-        app:custom_elevation="2dp"
+        app:depth_elevation="2dp"
         android:layerType="hardware"
         >
 
@@ -175,11 +175,11 @@ SDK. "
             android:textSize="14sp"
             />
 
-    </no.agens.depth.lib.DepthLayout>
+    </com.github.florent37.depth.DepthRelativeLayout>
 
 
 
-    <no.agens.depth.lib.DepthLayout
+    <com.github.florent37.depth.DepthRelativeLayout
         android:id="@+id/fab_container"
         android:layout_width="56dp"
         android:layout_height="56dp"
@@ -187,10 +187,10 @@ SDK. "
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginTop="232dp"
         android:background="@drawable/circle"
-        app:custom_elevation="6dp"
         android:layerType="hardware"
-        app:edge_color="@color/fab"
-        app:is_circle="true"
+        app:depth_elevation="6dp"
+        app:depth_edgeColor="@color/fab"
+        app:depth_isCircle="true"
         >
 
         <android.support.design.widget.FloatingActionButton
@@ -203,5 +203,5 @@ SDK. "
             app:rippleColor="@color/fab_highlight"
             android:layerType="hardware"
             />
-    </no.agens.depth.lib.DepthLayout>
-</no.agens.depth.lib.DepthRendrer>
+    </com.github.florent37.depth.DepthRelativeLayout>
+</com.github.florent37.depth.DepthRelativeLayoutContainer>

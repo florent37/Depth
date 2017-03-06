@@ -3,12 +3,12 @@ package com.github.florent37.depth.animations;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-import com.github.florent37.depth.DepthLayout;
+import com.github.florent37.depth.DepthRelativeLayout;
 import com.github.florent37.depth.TransitionHelper;
 
-import no.agens.depth.lib.tween.interpolators.BackOut;
-import no.agens.depth.lib.tween.interpolators.CircInOut;
-import no.agens.depth.lib.tween.interpolators.QuintInOut;
+import com.github.florent37.depth.lib.tween.interpolators.BackOut;
+import com.github.florent37.depth.lib.tween.interpolators.CircInOut;
+import com.github.florent37.depth.lib.tween.interpolators.QuintInOut;
 
 /**
  * Created by florentchampigny on 02/03/2017.
@@ -30,7 +30,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
     }
 
     @Override
-    public void prepareAnimators(DepthLayout target) {
+    public void prepareAnimators(DepthRelativeLayout target, int index) {
         final long totalDuration = revertConfiguration.getDuration();
 
         final float density = target.getResources().getDisplayMetrics().density;
@@ -91,7 +91,7 @@ public class RevertAnimation extends DepthAnimation<RevertAnimation> {
             scaleX.setDuration(duration);
             scaleX.setInterpolator(new CircInOut());
             scaleX.setStartDelay(firstDelay);
-            scaleX.addListener(listener);
+            attachListener(scaleX);
             add(scaleX);
             //target.setScaleX(TransitionHelper.TARGET_SCALE);
 

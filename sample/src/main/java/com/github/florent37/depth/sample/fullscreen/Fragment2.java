@@ -23,12 +23,9 @@ public class Fragment2 extends Fragment {
         return waterFragment;
     }
 
-    private Depth depth;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        depth = DepthProvider.getDepth(container);
-        return depth.setupFragment(10, 20f, inflater.inflate(R.layout.fragment_2, container, false));
+        return inflater.inflate(R.layout.fragment_2, container, false);
     }
 
     @Override
@@ -36,6 +33,7 @@ public class Fragment2 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        final Depth depth = DepthProvider.getDepth(view.getContext());
         depth.onFragmentReady(this);
     }
 

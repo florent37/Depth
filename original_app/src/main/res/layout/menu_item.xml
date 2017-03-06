@@ -6,7 +6,7 @@
                 android:orientation="horizontal"
     >
 
-    <no.agens.depth.lib.CircularSplashView
+    <com.github.florent37.depth.lib.CircularSplashView
         android:id="@+id/circle"
         android:layout_width="15dp"
         android:layout_height="15dp"

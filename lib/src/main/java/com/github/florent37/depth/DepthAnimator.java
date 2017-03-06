@@ -3,8 +3,10 @@ package com.github.florent37.depth;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.gihub.florent37.depth.R;
 import com.github.florent37.depth.animations.DepthAnimation;
 import com.github.florent37.depth.animations.EnterAnimation;
 import com.github.florent37.depth.animations.EnterConfiguration;
@@ -77,21 +79,72 @@ public class DepthAnimator {
         fragmentsState.add(new DepthFragmentState(fragment));
     }
 
-    private DepthLayout findDepthLayout(Fragment fragment) {
-        return (DepthLayout) fragment.getView().findViewById(R.id.root_depth_layout);
+    private DepthRelativeLayoutContainer findDepthLayoutContainer(Fragment fragment) {
+        return findDepthLayoutContainer(fragment.getView(), 6);
+    }
+
+    private DepthRelativeLayoutContainer findDepthLayoutContainer(View view, int depth) {
+        if (view instanceof DepthRelativeLayoutContainer) {
+            return (DepthRelativeLayoutContainer) view;
+        } else {
+            if (view instanceof ViewGroup) {
+                depth--;
+                final ViewGroup viewGroup = (ViewGroup) view;
+                for (int i = 0; i < viewGroup.getChildCount(); ++i){
+                    final DepthRelativeLayoutContainer depthRelativeLayoutContainer = findDepthLayoutContainer(viewGroup.getChildAt(i), depth);
+                    if (depthRelativeLayoutContainer != null) {
+                        return depthRelativeLayoutContainer;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private void afterAnimationEnd(int index) {
-        depth.notifyListenersEnd(animations.get(index), fragmentsState.get(index).getFragment());
+        final Fragment fragmentAnimated = fragmentsState.get(index).getFragment();
+        final DepthAnimation finishedAnimation = animations.get(index);
+        depth.notifyListenersEnd(finishedAnimation, fragmentAnimated);
         this.currentIndex = index + 1;
+
+        DepthLogger.log("afterAnimationEnd "+finishedAnimation.getClass().getCanonicalName());
+
+        if(finishedAnimation instanceof ExitAnimation){
+            if (fragmentAnimated != null) {
+                final View fragmentView = fragmentAnimated.getView();
+                if (fragmentView != null) {
+                    fragmentView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            depth.removeFragment(fragmentAnimated);
+                        }
+                    }, 100);
+                }
+            }
+        }
+
         if (currentIndex < animations.size()) {
             startAnimation(currentIndex);
         } else {
+            DepthLogger.log("clear");
+
+            for (DepthFragmentState depthFragmentState : fragmentsState) {
+                depthFragmentState.clear();
+            }
+            fragmentsState.clear();
+            for (DepthAnimation animation : animations) {
+                animation.clear();
+            }
+            animations.clear();
+            System.gc();
+
             depth.onAnimationFinished();
         }
     }
 
     void reloadFragmentsState() {
+        DepthLogger.log("reloadFragmentsState");
+
         for (DepthFragmentState depthFragmentState : fragmentsState) {
             depthFragmentState.reloadReady();
         }
@@ -100,15 +153,19 @@ public class DepthAnimator {
 
     private void startAnimation(final int index) {
         this.currentIndex = index;
+        DepthLogger.log("startAnimation "+currentIndex);
+
         final DepthFragmentState depthFragmentState = fragmentsState.get(index);
 
         final Fragment fragment = depthFragmentState.getFragment();
         if (fragment != null) {
+
             final boolean ready = depthFragmentState.isReady();
             if (ready) {
+                DepthLogger.log("fragment ready");
 
                 final DepthAnimation animation = animations.get(index);
-                animation.setDepthLayout(findDepthLayout(fragment));
+                animation.setDepthLayoutContainer(findDepthLayoutContainer(fragment));
                 animation.setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -117,6 +174,8 @@ public class DepthAnimator {
                 });
                 animation.start();
             } else {
+                DepthLogger.log("fragment added");
+
                 depth.addFragment(depthFragmentState.getFragment());
             }
         }

@@ -4,8 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 
-import no.agens.depth.lib.MathHelper;
-import no.agens.depth.lib.headers.PathBitmapMesh;
+import no.agens.depth.headers.PathBitmapMesh;
 
 public class Foam extends PathBitmapMesh {
     private float verticalOffset;

@@ -7,15 +7,15 @@ import android.animation.ValueAnimator;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.github.florent37.depth.DepthLayout;
+import com.github.florent37.depth.DepthRelativeLayout;
 
-import no.agens.depth.lib.tween.interpolators.BackOut;
-import no.agens.depth.lib.tween.interpolators.CircInOut;
-import no.agens.depth.lib.tween.interpolators.ExpoIn;
-import no.agens.depth.lib.tween.interpolators.ExpoOut;
-import no.agens.depth.lib.tween.interpolators.QuadInOut;
-import no.agens.depth.lib.tween.interpolators.QuintInOut;
-import no.agens.depth.lib.tween.interpolators.QuintOut;
+import com.github.florent37.depth.lib.tween.interpolators.BackOut;
+import com.github.florent37.depth.lib.tween.interpolators.CircInOut;
+import com.github.florent37.depth.lib.tween.interpolators.ExpoIn;
+import com.github.florent37.depth.lib.tween.interpolators.ExpoOut;
+import com.github.florent37.depth.lib.tween.interpolators.QuadInOut;
+import com.github.florent37.depth.lib.tween.interpolators.QuintInOut;
+import com.github.florent37.depth.lib.tween.interpolators.QuintOut;
 
 public class TransitionHelper {
 
@@ -29,14 +29,14 @@ public class TransitionHelper {
     public static final int FISRTDELAY = 300;
 
     public static void startIntroAnim(View root, AnimatorListenerAdapter introEndListener) {
-        introAnimate((DepthLayout) root.findViewById(R.id.root_dl), 0, 30f, 15, 180);
-        introAnimate((DepthLayout) root.findViewById(R.id.appbar), MOVE_Y_STEP, 20f, 30, 170);
-        introAnimate((DepthLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 20f, 45, 190);
-        introAnimate((DepthLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 20f, 60, 200);
-        introAnimate((DepthLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 20f, 75, 210).addListener(introEndListener);
+        introAnimate((DepthRelativeLayout) root.findViewById(R.id.root_dl), 0, 30f, 15, 180);
+        introAnimate((DepthRelativeLayout) root.findViewById(R.id.appbar), MOVE_Y_STEP, 20f, 30, 170);
+        introAnimate((DepthRelativeLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 20f, 45, 190);
+        introAnimate((DepthRelativeLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 20f, 60, 200);
+        introAnimate((DepthRelativeLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 20f, 75, 210).addListener(introEndListener);
     }
 
-    static ObjectAnimator introAnimate(final DepthLayout target, final float moveY, final float customElevation, long delay, int subtractDelay) {
+    static ObjectAnimator introAnimate(final DepthRelativeLayout target, final float moveY, final float customElevation, long delay, int subtractDelay) {
 
         target.setPivotY(getDistanceToCenter(target));
         target.setPivotX(getDistanceToCenterX(target));
@@ -95,11 +95,11 @@ public class TransitionHelper {
 
 
     public static void startExitAnim(View root) {
-        exitAnimate((DepthLayout) root.findViewById(R.id.root_dl), 0, 30f, 15, 190, true);
-        exitAnimate((DepthLayout) root.findViewById(R.id.appbar), MOVE_Y_STEP, 20f, 30, 170, true);
-        exitAnimate((DepthLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 20f, 45, 210, true);
-        exitAnimate((DepthLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 20f, 60, 230, true);
-        exitAnimate((DepthLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 20f, 75, 250, true);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.root_dl), 0, 30f, 15, 190, true);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.appbar), MOVE_Y_STEP, 20f, 30, 170, true);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 20f, 45, 210, true);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 20f, 60, 230, true);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 20f, 75, 250, true);
         hideStatusBar(root);
     }
 
@@ -110,7 +110,7 @@ public class TransitionHelper {
     }
 
 
-    static ValueAnimator exitAnimate(final DepthLayout target, final float moveY, final float customElevation, long delay, int subtractDelay, boolean continueOffscreen) {
+    static ValueAnimator exitAnimate(final DepthRelativeLayout target, final float moveY, final float customElevation, long delay, int subtractDelay, boolean continueOffscreen) {
 
         target.setPivotY(getDistanceToCenter(target));
         target.setPivotX(getDistanceToCenterX(target));
@@ -151,7 +151,7 @@ public class TransitionHelper {
         return scaleY;
     }
 
-    private static void continueOutToRight(DepthLayout target, float moveY, int subtractDelay) {
+    private static void continueOutToRight(DepthRelativeLayout target, float moveY, int subtractDelay) {
         ObjectAnimator translationY2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_Y, -moveY * target.getResources().getDisplayMetrics().density, -target.getResources().getDisplayMetrics().heightPixels).setDuration(900);
         translationY2.setInterpolator(new ExpoIn());
         translationY2.setStartDelay(0 + subtractDelay);
@@ -178,11 +178,11 @@ public class TransitionHelper {
 
     public static void animateToMenuState(View root, AnimatorListenerAdapter onMenuAnimFinished) {
         hideStatusBar(root);
-        exitAnimate((DepthLayout) root.findViewById(R.id.root_dl), 0, 30f, 15, 190, false);
-        exitAnimate((DepthLayout) root.findViewById(R.id.appbar), MOVE_Y_STEP, 20f, 30, 170, false);
-        exitAnimate((DepthLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 20f, 45, 210, false);
-        exitAnimate((DepthLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 20f, 60, 230, false);
-        exitAnimate((DepthLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 20f, 75, 250, false).addListener(onMenuAnimFinished);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.root_dl), 0, 30f, 15, 190, false);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.appbar), MOVE_Y_STEP, 20f, 30, 170, false);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 20f, 45, 210, false);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 20f, 60, 230, false);
+        exitAnimate((DepthRelativeLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 20f, 75, 250, false).addListener(onMenuAnimFinished);
 
         ObjectAnimator translationY = ObjectAnimator.ofFloat(root, View.TRANSLATION_Y, -90f * root.getResources().getDisplayMetrics().density).setDuration(DURATION);
         translationY.setInterpolator(VALUEinterpolator);
@@ -197,27 +197,27 @@ public class TransitionHelper {
     }
 
     public static void animateMenuOut(View root) {
-        continueOutToRight((DepthLayout) root.findViewById(R.id.root_dl), 0, 20);
-        continueOutToRight((DepthLayout) root.findViewById(R.id.appbar), MOVE_Y_STEP, 0);
-        continueOutToRight((DepthLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 40);
-        continueOutToRight((DepthLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 60);
-        continueOutToRight((DepthLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 80);
+        continueOutToRight((DepthRelativeLayout) root.findViewById(R.id.root_dl), 0, 20);
+        continueOutToRight((DepthRelativeLayout) root.findViewById(R.id.appbar), MOVE_Y_STEP, 0);
+        continueOutToRight((DepthRelativeLayout) root.findViewById(R.id.fab_container), MOVE_Y_STEP * 2f, 40);
+        continueOutToRight((DepthRelativeLayout) root.findViewById(R.id.dl2), MOVE_Y_STEP, 60);
+        continueOutToRight((DepthRelativeLayout) root.findViewById(R.id.dl3), MOVE_Y_STEP * 2, 80);
     }
 
     public static void startRevertFromMenu(View root, AnimatorListenerAdapter animatorListenerAdapter) {
 
-        revertFromMenu((DepthLayout) root.findViewById(R.id.root_dl), 30f, 10, 0);
-        revertFromMenu((DepthLayout) root.findViewById(R.id.appbar), 20f, 0, 0);
-        revertFromMenu((DepthLayout) root.findViewById(R.id.fab_container), 20f, 20, 6);
-        revertFromMenu((DepthLayout) root.findViewById(R.id.dl2), 20f, 30, 1);
-        revertFromMenu((DepthLayout) root.findViewById(R.id.dl3), 20f, 40, 2).addListener(animatorListenerAdapter);
+        revertFromMenu((DepthRelativeLayout) root.findViewById(R.id.root_dl), 30f, 10, 0);
+        revertFromMenu((DepthRelativeLayout) root.findViewById(R.id.appbar), 20f, 0, 0);
+        revertFromMenu((DepthRelativeLayout) root.findViewById(R.id.fab_container), 20f, 20, 6);
+        revertFromMenu((DepthRelativeLayout) root.findViewById(R.id.dl2), 20f, 30, 1);
+        revertFromMenu((DepthRelativeLayout) root.findViewById(R.id.dl3), 20f, 40, 2).addListener(animatorListenerAdapter);
         ObjectAnimator translationY = ObjectAnimator.ofFloat(root, View.TRANSLATION_Y, 0).setDuration(DURATION);
         translationY.setInterpolator(new QuintInOut());
         translationY.start();
     }
 
 
-    static ObjectAnimator revertFromMenu(final DepthLayout target, final float customElevation, int subtractDelay, float targetElevation) {
+    static ObjectAnimator revertFromMenu(final DepthRelativeLayout target, final float customElevation, int subtractDelay, float targetElevation) {
 
         target.setPivotY(getDistanceToCenter(target));
         target.setPivotX(getDistanceToCenterX(target));
@@ -263,7 +263,7 @@ public class TransitionHelper {
     }
 
     @NonNull
-    private static AnimatorListenerAdapter getShowStatusBarListener(final DepthLayout target) {
+    private static AnimatorListenerAdapter getShowStatusBarListener(final DepthRelativeLayout target) {
         return new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

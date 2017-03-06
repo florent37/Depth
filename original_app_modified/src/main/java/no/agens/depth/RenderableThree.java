@@ -12,7 +12,7 @@ import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringConfig;
 import com.facebook.rebound.SpringSystem;
 
-import no.agens.depth.lib.headers.Renderable;
+import no.agens.depth.headers.Renderable;
 
 /**
  * Created by danielzeller on 01.10.14.

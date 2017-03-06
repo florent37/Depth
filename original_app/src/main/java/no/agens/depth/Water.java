@@ -6,8 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-import no.agens.depth.lib.headers.PathBitmapMesh;
-import no.agens.depth.lib.headers.Renderable;
+import no.agens.depth.headers.PathBitmapMesh;
+import no.agens.depth.headers.Renderable;
 
 public class Water extends Renderable {
 

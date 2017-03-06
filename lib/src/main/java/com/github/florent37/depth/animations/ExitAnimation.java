@@ -4,9 +4,9 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.view.View;
 
-import com.github.florent37.depth.DepthLayout;
+import com.github.florent37.depth.DepthRelativeLayout;
 
-import no.agens.depth.lib.tween.interpolators.ExpoIn;
+import com.github.florent37.depth.lib.tween.interpolators.ExpoIn;
 
 /**
  * Created by florentchampigny on 02/03/2017.
@@ -24,13 +24,11 @@ public class ExitAnimation extends DepthAnimation<ExitAnimation> {
     }
 
     @Override
-    public void prepareAnimators(DepthLayout depthLayout) {
-        final View target = this.depthLayout;
-
+    public void prepareAnimators(DepthRelativeLayout target, int index) {
         final TimeInterpolator interpolator = new ExpoIn();
 
-        final float finalTranslationY = exitConfiguration.getFinalYPercent() * depthLayout.getResources().getDisplayMetrics().heightPixels;
-        final float finalTranslationX = exitConfiguration.getFinalXPercent() * depthLayout.getResources().getDisplayMetrics().widthPixels;
+        final float finalTranslationY = exitConfiguration.getFinalYPercent() * target.getResources().getDisplayMetrics().heightPixels;
+        final float finalTranslationX = exitConfiguration.getFinalXPercent() * target.getResources().getDisplayMetrics().widthPixels;
 
         final long totalDuration = exitConfiguration.getDuration();
 
@@ -38,7 +36,7 @@ public class ExitAnimation extends DepthAnimation<ExitAnimation> {
         translationY2.setDuration(totalDuration);
         //translationY2.setInterpolator(new AccelerateInterpolator());
         translationY2.setInterpolator(interpolator);
-        translationY2.addListener(listener);
+        attachListener(translationY2);
         add(translationY2);
 
         final ObjectAnimator translationX2 = ObjectAnimator.ofFloat(target, View.TRANSLATION_X, finalTranslationX);

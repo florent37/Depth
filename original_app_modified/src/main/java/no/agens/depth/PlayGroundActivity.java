@@ -7,13 +7,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-import com.github.florent37.depth.DepthLayout;
-
-import no.agens.depth.lib.MaterialMenuDrawable;
+import com.github.florent37.depth.DepthRelativeLayout;
 
 public class PlayGroundActivity extends Activity {
 
-    private DepthLayout depthView;
+    private DepthRelativeLayout depthView;
     private static final float MAX_ROTATION_X = 90;
     private static final float MAX_ROTATION_Y = 90;
     private static final float MAX_ROTATION_Z = 360;
@@ -28,7 +26,7 @@ public class PlayGroundActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_playground);
         seekbarColor = getResources().getColor(R.color.fab);
-        depthView = (DepthLayout) findViewById(R.id.depth_view);
+        depthView = (DepthRelativeLayout) findViewById(R.id.depth_view);
         depthView.setCameraDistance((CAMERA_DISTANCE * getResources().getDisplayMetrics().density));
         setupSeekBars();
         makeAppFullscreen();

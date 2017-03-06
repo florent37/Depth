@@ -3,7 +3,7 @@ package no.agens.depth;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import no.agens.depth.lib.headers.Renderable;
+import no.agens.depth.headers.Renderable;
 
 public class RenderableBear extends Renderable {
 

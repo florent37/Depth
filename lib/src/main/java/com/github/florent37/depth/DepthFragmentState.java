@@ -33,4 +33,8 @@ public class DepthFragmentState {
     public Fragment getFragment() {
         return fragmentReference.get();
     }
+
+    public void clear() {
+        fragmentReference.clear();
+    }
 }

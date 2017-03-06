@@ -53,6 +53,7 @@ public class Depth {
     }
 
     public void onFragmentReady(Fragment fragment) {
+        DepthLogger.log("onFragmentReady "+fragment);
         if (fragment != null) {
             final View view = fragment.getView();
             if (view != null) {
@@ -75,6 +76,15 @@ public class Depth {
             final FragmentActivity activity = contextReference.get();
             if (contextReference != null) {
                 fragmentManager.addFragment(activity, fragmentContainer, fragment);
+            }
+        }
+    }
+
+    public void removeFragment(Fragment fragment) {
+        if (contextReference != null) {
+            final FragmentActivity activity = contextReference.get();
+            if (contextReference != null) {
+                fragmentManager.removeFragment(activity, fragment);
             }
         }
     }

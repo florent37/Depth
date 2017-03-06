@@ -9,7 +9,7 @@ import android.graphics.PathMeasure;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
-import no.agens.depth.lib.headers.Renderable;
+import no.agens.depth.headers.Renderable;
 
 public class Smoke extends Renderable {
     public static final float WIND_SENSITIVITY = 7f;
