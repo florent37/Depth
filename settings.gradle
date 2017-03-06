@@ -1,1 +1,1 @@
-include ':original_app', ':original_app_modified', ':lib',':original_lib', ':sample'
+include ':depth', ':sample' //,':original_app', ':original_app_modified',':original_lib'
