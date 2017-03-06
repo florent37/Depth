@@ -5,7 +5,7 @@ Add some Depth to your fragments
 [![gif](https://raw.githubusercontent.com/florent37/Depth/master/media/default.gif)](https://github.com/florent37/Depth)
 [![gif](https://raw.githubusercontent.com/florent37/Depth/master/media/revert.gif)](https://github.com/florent37/Depth)
 
-The blue comes from the activity background color
+*The blue comes from the activity background color*
 
 In your *activity*
 ```java
