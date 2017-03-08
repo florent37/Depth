@@ -2,6 +2,8 @@
 
 Add some Depth to your fragments
 
+<a href="https://github.com/florent37/Depth/raw/master/sample-debug.apk">Sample apk</a>
+
 [![gif](https://raw.githubusercontent.com/florent37/Depth/master/media/default.gif)](https://github.com/florent37/Depth)
 [![gif](https://raw.githubusercontent.com/florent37/Depth/master/media/revert.gif)](https://github.com/florent37/Depth)
 
