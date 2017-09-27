@@ -40,7 +40,7 @@ public class FullScreenActivity extends AppCompatActivity implements FragmentCal
         //      }
         //  });
 
-        setContentView(R.layout.activity_fullscreen);
+        setContentView(R.layout.depth_activity_fullscreen);
         makeAppFullscreen();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();

@@ -21,7 +21,7 @@ public class RevertActivity extends AppCompatActivity implements FragmentCallbac
 
         depth = DepthProvider.getDepth(this);
 
-        setContentView(R.layout.activity_revert);
+        setContentView(R.layout.depth_activity_revert);
         //makeAppFullscreen();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();

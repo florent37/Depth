@@ -28,7 +28,7 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.depth = DepthProvider.getDepth(container);
-        return depth.setupFragment(10f, 10f, inflater.inflate(R.layout.fragment_1, container, false));
+        return depth.setupFragment(10f, 10f, inflater.inflate(R.layout.depth_fragment_1, container, false));
     }
 
     @Override

@@ -20,7 +20,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/circle" />
+            android:background="@drawable/depth_circle" />
 
         <View
             android:id="@+id/open_reset"
@@ -28,7 +28,7 @@
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="15dp"
-            android:background="@drawable/circle" />
+            android:background="@drawable/depth_circle" />
     </LinearLayout>
 </RelativeLayout>
 
