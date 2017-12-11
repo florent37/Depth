@@ -156,7 +156,7 @@ compile 'com.github.florent37:depth:1.0.0'
 
 # Changelog
 
-##1.0.0
+## 1.0.0
 
 Initial import
 
@@ -185,7 +185,7 @@ Author: Florent Champigny
        src="https://raw.githubusercontent.com/florent37/DaVinci/master/mobile/src/main/res/drawable-hdpi/linkedin.png" />
 </a>
 
-#License
+# License
 
     Copyright 2017 florent37, Inc.
 
