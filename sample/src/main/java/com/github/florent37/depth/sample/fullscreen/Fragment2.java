@@ -10,9 +10,6 @@ import com.github.florent37.depth.Depth;
 import com.github.florent37.depth.DepthProvider;
 import com.github.florent37.depth.sample.R;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class Fragment2 extends Fragment {
 
     public static Fragment newInstance(boolean animateEnter) {
@@ -31,20 +28,21 @@ public class Fragment2 extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
 
         final Depth depth = DepthProvider.getDepth(view.getContext());
         depth.onFragmentReady(this);
-    }
 
-    @OnClick(R.id.next)
-    public void onNextClicked() {
-        ((FragmentCallback) getActivity()).changeFragment(this);
+        view.findViewById(R.id.next).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((FragmentCallback) getActivity()).changeFragment(Fragment2.this);
+            }
+        });
+        view.findViewById(R.id.open_reset).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((FragmentCallback) getActivity()).openResetFragment(Fragment2.this);
+            }
+        });
     }
-
-    @OnClick(R.id.open_reset)
-    public void onOpenResetClicked() {
-        ((FragmentCallback) getActivity()).openResetFragment(this);
-    }
-
 }
