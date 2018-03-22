@@ -51,7 +51,7 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
     }
 
     public float getTopEdgeLength(DepthLayout dl) {
-        return getDistance(dl.getTopLeftBack(), dl.getTopRightBack());
+        return getDistance(dl.getDepthManager().getTopLeftBack(), dl.getDepthManager().getTopRightBack());
     }
 
     float getDistance(PointF p1, PointF p2) {
@@ -75,7 +75,7 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
                 for (int i = 0; i < getChildCount(); i++) {
                     final View child = getChildAt(i);
                     if (child instanceof DepthLayout) {
-                        boolean hasChangedBounds = ((DepthLayout) child).calculateBounds();
+                        boolean hasChangedBounds = ((DepthLayout) child).getDepthManager().calculateBounds();
                         if (hasChangedBounds)
                             invalidate();
                     }
@@ -95,10 +95,10 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
         if (!isInEditMode()) {
             if (child instanceof DepthLayout) {
                 final DepthLayout dl = (DepthLayout) child;
-                final DepthRelativeLayout.CustomShadow customShadow = dl.getCustomShadow();
+                final CustomShadow customShadow = dl.getCustomShadow();
 
                 final float[] src = new float[]{0, 0, dl.getWidth(), 0, dl.getWidth(), dl.getHeight(), 0, dl.getHeight()};
-                if (dl.isCircle()) {
+                if (dl.getDepthManager().isCircle()) {
                     customShadow.drawShadow(canvas, roundSoftShadow);
                     if (Math.abs(dl.getRotationX()) > 1 || Math.abs(dl.getRotationY()) > 1) {
                         drawCornerBaseShape(dl, canvas, src);
@@ -118,14 +118,14 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
     }
 
     private void drawCornerBaseShape(DepthLayout dl, Canvas canvas, float[] src) {
-        final float[] dst = new float[]{dl.getTopLeftBack().x, dl.getTopLeftBack().y, dl.getTopRightBack().x, dl.getTopRightBack().y, dl.getBottomRightBack().x, dl.getBottomRightBack().y, dl.getBottomLeftBack().x, dl.getBottomLeftBack().y};
+        final float[] dst = new float[]{dl.getDepthManager().getTopLeftBack().x, dl.getDepthManager().getTopLeftBack().y, dl.getDepthManager().getTopRightBack().x, dl.getDepthManager().getTopRightBack().y, dl.getDepthManager().getBottomRightBack().x, dl.getDepthManager().getBottomRightBack().y, dl.getDepthManager().getBottomLeftBack().x, dl.getDepthManager().getBottomLeftBack().y};
         final int count = canvas.save();
         matrix.setPolyToPoly(src, 0, dst, 0, src.length >> 1);
         canvas.concat(matrix);
         edgePath.reset();
         edgePath.addRoundRect(0, 0, dl.getWidth(), dl.getHeight(), dl.getWidth() / 2f, dl.getHeight() / 2f, Path.Direction.CCW);
 
-        canvas.drawPath(edgePath, dl.getEdgePaint());
+        canvas.drawPath(edgePath, dl.getDepthManager().getEdgePaint());
         shadowPaint.setAlpha((int) (shadowAlpha * 0.5f * 255));
         canvas.drawPath(edgePath, shadowPaint);
 
@@ -189,15 +189,15 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
     }
 
     private float getRightEdgeLength(DepthLayout dl) {
-        return getDistance(dl.getTopRightBack(), dl.getBottomRightBack());
+        return getDistance(dl.getDepthManager().getTopRightBack(), dl.getDepthManager().getBottomRightBack());
     }
 
     private float getLeftEdgeLength(DepthLayout dl) {
-        return getDistance(dl.getTopLeftBack(), dl.getBottomLeftBack());
+        return getDistance(dl.getDepthManager().getTopLeftBack(), dl.getDepthManager().getBottomLeftBack());
     }
 
     private float getBottomEdgeLength(DepthLayout dl) {
-        return getDistance(dl.getBottomLeftBack(), dl.getBottomRightBack());
+        return getDistance(dl.getDepthManager().getBottomLeftBack(), dl.getDepthManager().getBottomRightBack());
     }
 
     void drawShadow(PointF point1, PointF point2, float correctionValue, Canvas canvas, DepthLayout dl) {
@@ -208,7 +208,7 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
     }
 
     private void drawRectangle(DepthLayout dl, Canvas canvas) {
-        canvas.drawRect(0, 0, dl.getWidth(), dl.getHeight(), dl.getEdgePaint());
+        canvas.drawRect(0, 0, dl.getWidth(), dl.getHeight(), dl.getDepthManager().getEdgePaint());
     }
 
     public float getAngle(PointF point1, PointF point2) {
@@ -216,42 +216,42 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
     }
 
     private void drawLeftEdge(DepthLayout dl, Canvas canvas, float[] src) {
-        final float[] dst = new float[]{dl.getTopLeft().x, dl.getTopLeft().y, dl.getTopLeftBack().x, dl.getTopLeftBack().y, dl.getBottomLeftBack().x, dl.getBottomLeftBack().y, dl.getBottomLeft().x, dl.getBottomLeft().y};
+        final float[] dst = new float[]{dl.getDepthManager().getTopLeft().x, dl.getDepthManager().getTopLeft().y, dl.getDepthManager().getTopLeftBack().x, dl.getDepthManager().getTopLeftBack().y, dl.getDepthManager().getBottomLeftBack().x, dl.getDepthManager().getBottomLeftBack().y, dl.getDepthManager().getBottomLeft().x, dl.getDepthManager().getBottomLeft().y};
         final int count = canvas.save();
         matrix.setPolyToPoly(src, 0, dst, 0, src.length >> 1);
         canvas.concat(matrix);
         drawRectangle(dl, canvas);
-        drawShadow(dl.getTopLeft(), dl.getBottomLeft(), 0, canvas, dl);
+        drawShadow(dl.getDepthManager().getTopLeft(), dl.getDepthManager().getBottomLeft(), 0, canvas, dl);
         canvas.restoreToCount(count);
     }
 
     private void drawRightEdge(DepthLayout dl, Canvas canvas, float[] src) {
-        final float[] dst = new float[]{dl.getTopRight().x, dl.getTopRight().y, dl.getTopRightBack().x, dl.getTopRightBack().y, dl.getBottomRightBack().x, dl.getBottomRightBack().y, dl.getBottomRight().x, dl.getBottomRight().y};
+        final float[] dst = new float[]{dl.getDepthManager().getTopRight().x, dl.getDepthManager().getTopRight().y, dl.getDepthManager().getTopRightBack().x, dl.getDepthManager().getTopRightBack().y, dl.getDepthManager().getBottomRightBack().x, dl.getDepthManager().getBottomRightBack().y, dl.getDepthManager().getBottomRight().x, dl.getDepthManager().getBottomRight().y};
         final int count = canvas.save();
         matrix.setPolyToPoly(src, 0, dst, 0, src.length >> 1);
         canvas.concat(matrix);
         drawRectangle(dl, canvas);
-        drawShadow(dl.getTopRight(), dl.getBottomRight(), -180f, canvas, dl);
+        drawShadow(dl.getDepthManager().getTopRight(), dl.getDepthManager().getBottomRight(), -180f, canvas, dl);
         canvas.restoreToCount(count);
     }
 
     private void drawTopEdge(DepthLayout dl, Canvas canvas, float[] src) {
-        final float[] dst = new float[]{dl.getTopLeft().x, dl.getTopLeft().y, dl.getTopRight().x, dl.getTopRight().y, dl.getTopRightBack().x, dl.getTopRightBack().y, dl.getTopLeftBack().x, dl.getTopLeftBack().y};
+        final float[] dst = new float[]{dl.getDepthManager().getTopLeft().x, dl.getDepthManager().getTopLeft().y, dl.getDepthManager().getTopRight().x, dl.getDepthManager().getTopRight().y, dl.getDepthManager().getTopRightBack().x, dl.getDepthManager().getTopRightBack().y, dl.getDepthManager().getTopLeftBack().x, dl.getDepthManager().getTopLeftBack().y};
         final int count = canvas.save();
         matrix.setPolyToPoly(src, 0, dst, 0, src.length >> 1);
         canvas.concat(matrix);
         drawRectangle(dl, canvas);
-        drawShadow(dl.getTopLeft(), dl.getTopRight(), -180f, canvas, dl);
+        drawShadow(dl.getDepthManager().getTopLeft(), dl.getDepthManager().getTopRight(), -180f, canvas, dl);
         canvas.restoreToCount(count);
     }
 
     private void drawBottomEdge(DepthLayout dl, Canvas canvas, float[] src) {
-        final float[] dst = new float[]{dl.getBottomLeft().x, dl.getBottomLeft().y, dl.getBottomRight().x, dl.getBottomRight().y, dl.getBottomRightBack().x, dl.getBottomRightBack().y, dl.getBottomLeftBack().x, dl.getBottomLeftBack().y};
+        final float[] dst = new float[]{dl.getDepthManager().getBottomLeft().x, dl.getDepthManager().getBottomLeft().y, dl.getDepthManager().getBottomRight().x, dl.getDepthManager().getBottomRight().y, dl.getDepthManager().getBottomRightBack().x, dl.getDepthManager().getBottomRightBack().y, dl.getDepthManager().getBottomLeftBack().x, dl.getDepthManager().getBottomLeftBack().y};
         final int count = canvas.save();
         matrix.setPolyToPoly(src, 0, dst, 0, dst.length >> 1);
         canvas.concat(matrix);
         drawRectangle(dl, canvas);
-        drawShadow(dl.getBottomLeft(), dl.getBottomRight(), 0, canvas, dl);
+        drawShadow(dl.getDepthManager().getBottomLeft(), dl.getDepthManager().getBottomRight(), 0, canvas, dl);
         canvas.restoreToCount(count);
     }
 }
