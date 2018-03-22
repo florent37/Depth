@@ -1,21 +1,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        />
+        android:background="@color/background" />
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <com.github.florent37.depth.DepthRelativeLayoutContainer
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
+        <com.github.florent37.depth.DepthRelativeLayout
+            android:id="@+id/depthContainer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/white"
+            app:depth_value="2dp"
+            app:depth_zIndex="0">
 
-    </FrameLayout>
-
+        </com.github.florent37.depth.DepthRelativeLayout>
+    </com.github.florent37.depth.DepthRelativeLayoutContainer>
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewOutlineProvider;
@@ -16,50 +17,46 @@ import android.widget.RelativeLayout;
 
 import com.gihub.florent37.depth.R;
 
-public class DepthRelativeLayout extends RelativeLayout {
-
+public class DepthRelativeLayout extends RelativeLayout implements DepthLayout {
 
     public static final int DEFAULT_EDGE_COLOR = Color.WHITE;
     public static final int DEFAULT_THICKNESS = 2;
-    Paint edgePaint = new Paint();
-    float[] prevSrc = new float[8];
-    PointF topLeft = new PointF(0, 0);
-    PointF topRight = new PointF(0, 0);
-    PointF bottomLeft = new PointF(0, 0);
-    PointF bottomRight = new PointF(0, 0);
-    PointF topLeftBack = new PointF(0, 0);
-    PointF topRightBack = new PointF(0, 0);
-    PointF bottomLeftBack = new PointF(0, 0);
-    PointF bottomRightBack = new PointF(0, 0);
-    float customShadowElevation;
+    private final CustomShadow customShadow;
+    private final PointF topLeft = new PointF(0, 0);
+    private final PointF topRight = new PointF(0, 0);
+    private final PointF bottomLeft = new PointF(0, 0);
+    private final PointF bottomRight = new PointF(0, 0);
+    private final PointF topLeftBack = new PointF(0, 0);
+    private final PointF topRightBack = new PointF(0, 0);
+    private final PointF bottomLeftBack = new PointF(0, 0);
+    private final PointF bottomRightBack = new PointF(0, 0);
+    private Paint edgePaint = new Paint();
+    private float[] prevSrc = new float[8];
     private int depthIndex = 0;
-    private int animationDelay = 0;
     private float depth;
     private boolean isCircle = false;
-    private CustomShadow customShadow = new CustomShadow();
 
     public DepthRelativeLayout(Context context) {
         super(context);
+        customShadow = new CustomShadow(this);
         initView(null);
     }
 
     public DepthRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        customShadow = new CustomShadow(this);
         initView(attrs);
 
     }
 
     public DepthRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        customShadow = new CustomShadow(this);
         initView(attrs);
     }
 
     public int getDepthIndex() {
         return depthIndex;
-    }
-
-    public int getAnimationDelay() {
-        return animationDelay;
     }
 
     @Override
@@ -82,23 +79,26 @@ public class DepthRelativeLayout extends RelativeLayout {
         edgePaint.setColor(DEFAULT_EDGE_COLOR);
         edgePaint.setAntiAlias(true);
         if (attrs != null) {
-            TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.DepthRelativeLayout);
+            final TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.DepthRelativeLayout);
             edgePaint.setColor(arr.getInt(R.styleable.DepthRelativeLayout_depth_edgeColor, DEFAULT_EDGE_COLOR));
             setIsCircle(arr.getBoolean(R.styleable.DepthRelativeLayout_depth_isCircle, false));
             depth = arr.getDimension(R.styleable.DepthRelativeLayout_depth_value, DEFAULT_THICKNESS * getResources().getDisplayMetrics().density);
             depthIndex = arr.getInteger(R.styleable.DepthRelativeLayout_depth_zIndex, depthIndex);
-            animationDelay = arr.getInteger(R.styleable.DepthRelativeLayout_depth_animationDelay, animationDelay);
-            customShadowElevation = arr.getDimension(R.styleable.DepthRelativeLayout_depth_elevation, 0);
+            setCustomShadowElevation(arr.getDimension(R.styleable.DepthRelativeLayout_depth_elevation, 0));
+            arr.recycle();
         } else {
             edgePaint.setColor(DEFAULT_EDGE_COLOR);
             depth = DEFAULT_THICKNESS * getResources().getDisplayMetrics().density;
         }
-        setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
 
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                public void getOutline(View view, Outline outline) {
+
+                }
+            });
+        }
     }
 
     public float getDepth() {
@@ -134,7 +134,7 @@ public class DepthRelativeLayout extends RelativeLayout {
         bottomLeft.y = src[5] + getTop();
         bottomRight.x = src[6] + getLeft();
         bottomRight.y = src[7] + getTop();
-        boolean returnValue = hasMatrixChanged(src);
+        final boolean returnValue = hasMatrixChanged(src);
         prevSrc = src;
         float percentFrom90X = (getRotationX()) / 90f;
         float percentFrom90Y = (-getRotationY()) / 90f;
@@ -204,33 +204,52 @@ public class DepthRelativeLayout extends RelativeLayout {
     }
 
     public float getCustomShadowElevation() {
-        return customShadowElevation;
+        return this.customShadow.getCustomShadowElevation();
     }
 
     public void setCustomShadowElevation(float customShadowElevation) {
-        this.customShadowElevation = customShadowElevation;
-        ((View) getParent()).invalidate();
+        this.customShadow.setCustomShadowElevation(customShadowElevation);
+        if (getParent() instanceof View) {
+            ((View) getParent()).invalidate();
+        }
     }
 
-    class CustomShadow {
+    static class CustomShadow {
 
-        public static final float DEFAULT_SHADOW_PADDING = 10f;
-        PointF topLeftBack = new PointF(0, 0);
-        PointF topRightBack = new PointF(0, 0);
-        PointF bottomLeftBack = new PointF(0, 0);
-        PointF bottomRightBack = new PointF(0, 0);
-        int padding;
-        Matrix matrix = new Matrix();
+        private static final float DEFAULT_SHADOW_PADDING = 10f;
+
+        private final View view;
+
+        private PointF topLeftBack = new PointF(0, 0);
+        private PointF topRightBack = new PointF(0, 0);
+        private PointF bottomLeftBack = new PointF(0, 0);
+        private PointF bottomRightBack = new PointF(0, 0);
+        private int padding;
+        private Matrix matrix = new Matrix();
+
+        private float customShadowElevation;
+
+        CustomShadow(View view) {
+            this.view = view;
+        }
+
+        private float getCustomShadowElevation() {
+            return customShadowElevation;
+        }
+
+        private void setCustomShadowElevation(float customShadowElevation) {
+            this.customShadowElevation = customShadowElevation;
+        }
 
         public boolean calculateBounds(DepthRelativeLayout target) {
             float[] src = new float[8];
-            float density = getResources().getDisplayMetrics().density;
+            float density = view.getResources().getDisplayMetrics().density;
             float offsetY = customShadowElevation;
             float offsetX = customShadowElevation / 5;
             padding = (int) (customShadowElevation / 4f + DEFAULT_SHADOW_PADDING * density);
 
             float[] dst = new float[]{-padding, -padding, target.getWidth() + padding, -padding, -padding, target.getHeight() + padding, target.getWidth() + padding, target.getHeight() + padding};
-            Matrix matrix = getMatrix();
+            final Matrix matrix = view.getMatrix();
             matrix.mapPoints(src, dst);
 
             topLeftBack.x = src[0] + target.getLeft() + offsetX;
@@ -246,12 +265,11 @@ public class DepthRelativeLayout extends RelativeLayout {
             return false;
         }
 
-        public void drawShadow(Canvas canvas, DepthRelativeLayout dl, Drawable shadow) {
-
-            shadow.setBounds(-padding, -padding, dl.getWidth() + padding, dl.getHeight() + padding);
-            float[] src = new float[]{0, 0, dl.getWidth(), 0, dl.getWidth(), dl.getHeight(), 0, dl.getHeight()};
+        public void drawShadow(Canvas canvas, Drawable shadow) {
+            shadow.setBounds(-padding, -padding, view.getWidth() + padding, view.getHeight() + padding);
+            float[] src = new float[]{0, 0, view.getWidth(), 0, view.getWidth(), view.getHeight(), 0, view.getHeight()};
             float[] dst = new float[]{topLeftBack.x, topLeftBack.y, topRightBack.x, topRightBack.y, bottomRightBack.x, bottomRightBack.y, bottomLeftBack.x, bottomLeftBack.y};
-            int count = canvas.save();
+            final int count = canvas.save();
             matrix.setPolyToPoly(src, 0, dst, 0, src.length >> 1);
             canvas.concat(matrix);
             shadow.draw(canvas);

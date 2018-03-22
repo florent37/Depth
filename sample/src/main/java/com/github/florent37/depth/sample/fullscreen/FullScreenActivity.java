@@ -1,138 +1,42 @@
 package com.github.florent37.depth.sample.fullscreen;
 
-import android.graphics.Color;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.github.florent37.depth.Depth;
-import com.github.florent37.depth.DepthProvider;
-import com.github.florent37.depth.animations.EnterConfiguration;
-import com.github.florent37.depth.animations.ExitConfiguration;
-import com.github.florent37.depth.animations.ReduceConfiguration;
+import com.github.florent37.depth.DepthRelativeLayout;
 import com.github.florent37.depth.sample.R;
 
-public class FullScreenActivity extends AppCompatActivity implements FragmentCallback {
-
-    int count = 0;
-    private Depth depth;
+public class FullScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        depth = DepthProvider.getDepth(this);
-
-        //  depth.setFragmentManager(new Depth.FragmentManager() {
-        //      @Override
-        //      public void addFragment(Activity activity, int fragmentContainer, Fragment fragment) {
-        //          activity.getFragmentManager().beginTransaction()
-        //                  .replace(fragmentContainer, fragment)
-        //                  .commitAllowingStateLoss();
-        //      }
-        //
-        //      @Override
-        //      public void removeFragment(Activity activity, Fragment fragment) {
-        //          activity.getFragmentManager().beginTransaction()
-        //                  .remove(fragment)
-        //                  .commitAllowingStateLoss();
-        //      }
-        //  });
-
         setContentView(R.layout.depth_activity_fullscreen);
-        makeAppFullscreen();
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, Fragment1.newInstance(false)).commit();
-        }
 
-        depth.setFragmentContainer(R.id.fragment_container);
-    }
+        DepthRelativeLayout depthLayout = findViewById(R.id.depthContainer);
+        float depth = 30;
+        depthLayout.setDepth(depth * getResources().getDisplayMetrics().density);
 
-    private void makeAppFullscreen() {
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
+        float elevation = 100;
+        depthLayout.setCustomShadowElevation(elevation * getResources().getDisplayMetrics().density);
 
-    @Override
-    public void changeFragment(final Fragment oldFragment) {
-        final Fragment newFragment = (++count % 2 == 0) ? Fragment1.newInstance(true) : Fragment2.newInstance(true);
+        depthLayout.setRotationX(-10);
+        depthLayout.setRotationY(45);
 
-        switch (count % 3) {
-            case 0:
-                animateDefault(oldFragment, newFragment);
-                break;
-            case 1:
-                animateOnTop(oldFragment, newFragment);
-                break;
-            case 2:
-                animateOnLeft(oldFragment, newFragment);
-                break;
-        }
-    }
+        final ObjectAnimator rotationY = ObjectAnimator.ofFloat(depthLayout, View.ROTATION_Y, 25, 0, -25);
+        rotationY.setDuration(1000);
+        rotationY.setRepeatCount(ValueAnimator.INFINITE);
+        rotationY.setRepeatMode(ValueAnimator.REVERSE);
+        rotationY.start();
 
-    private void animateDefault(final Fragment oldFragment, final Fragment newFragment){
-        depth
-                .animate()
-                .reduce(oldFragment)
-
-                .exit(oldFragment)
-
-                .enter(newFragment)
-                .start();
-    }
-
-    private void animateOnTop(final Fragment oldFragment, final Fragment newFragment){
-        depth
-                .animate()
-                .reduce(oldFragment, new ReduceConfiguration()
-                        .setRotationZ(0f)
-                        .setRotationX(30f)
-                )
-
-                .exit(oldFragment, new ExitConfiguration()
-                        .setFinalXPercent(0f)
-                        .setFinalYPercent(-1f)
-                )
-                .enter(newFragment, new EnterConfiguration()
-                        .setInitialXPercent(0f)
-                        .setInitialYPercent(1f)
-                        .setInitialRotationZ(0f)
-                        .setInitialRotationX(30f)
-                )
-                .start();
-    }
-
-    private void animateOnLeft(final Fragment oldFragment, final Fragment newFragment){
-        depth
-                .animate()
-                .reduce(oldFragment, new ReduceConfiguration()
-                        .setRotationZ(0f)
-                        .setRotationX(30f)
-                )
-
-                .exit(oldFragment, new ExitConfiguration()
-                        .setFinalXPercent(-1f)
-                        .setFinalYPercent(0f)
-                )
-                .enter(newFragment, new EnterConfiguration()
-                        .setInitialXPercent(1f)
-                        .setInitialYPercent(0f)
-                        .setInitialRotationZ(0f)
-                        .setInitialRotationX(30f)
-                )
-                .start();
-    }
-
-    @Override
-    public void openResetFragment(final Fragment fragment) {
-        depth
-                .animate()
-                .reduce(fragment, new ReduceConfiguration().setScale(0.5f))
-                .revert(fragment)
-                .start();
+        final ObjectAnimator rotationX = ObjectAnimator.ofFloat(depthLayout, View.ROTATION_X, -25, 0, 25);
+        rotationX.setDuration(2500);
+        rotationX.setRepeatCount(ValueAnimator.INFINITE);
+        rotationX.setRepeatMode(ValueAnimator.REVERSE);
+        rotationX.start();
     }
 
 }
