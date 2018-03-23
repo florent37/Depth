@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:background="@color/background" />
 
-    <com.github.florent37.depth.container.DepthRelativeLayoutContainer
+    <com.github.florent37.depth.container.DepthContainerRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -27,5 +27,5 @@
                 android:src="@drawable/homer"/>
 
         </com.github.florent37.depth.depthview.DepthRelativeLayout>
-    </com.github.florent37.depth.container.DepthRelativeLayoutContainer>
+    </com.github.florent37.depth.container.DepthContainerRelativeLayout>
 </RelativeLayout>

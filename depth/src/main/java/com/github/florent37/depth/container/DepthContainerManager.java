@@ -1,6 +1,5 @@
 package com.github.florent37.depth.container;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -10,19 +9,17 @@ import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.content.ContextCompat;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.RelativeLayout;
 
 import com.gihub.florent37.depth.R;
 import com.github.florent37.depth.CustomShadow;
 import com.github.florent37.depth.depthview.DepthLayout;
 
-public class DepthRelativeLayoutContainer extends RelativeLayout {
+public class DepthContainerManager {
+    private final ViewGroup view;
 
-    private final DepthMotionHandler motionHandler;
     private Matrix matrix = new Matrix();
     private Paint shadowPaint = new Paint();
     private NinePatchDrawable softShadow;
@@ -30,22 +27,8 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
     private Path edgePath = new Path();
     private float shadowAlpha = 0.3f;
 
-    public DepthRelativeLayoutContainer(Context context) {
-        super(context);
-        motionHandler = new DepthMotionHandler(this);
-        setup();
-    }
-
-    public DepthRelativeLayoutContainer(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        motionHandler = new DepthMotionHandler(this);
-        setup();
-    }
-
-    public DepthRelativeLayoutContainer(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        motionHandler = new DepthMotionHandler(this);
-        setup();
+    public DepthContainerManager(ViewGroup view) {
+        this.view = view;
     }
 
     public float getTopEdgeLength(DepthLayout dl) {
@@ -65,17 +48,17 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
     }
 
     void setup() {
-        setLayerType(LAYER_TYPE_HARDWARE, null);
+        view.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
-        getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                for (int i = 0; i < getChildCount(); i++) {
-                    final View child = getChildAt(i);
+                for (int i = 0; i < view.getChildCount(); i++) {
+                    final View child = view.getChildAt(i);
                     if (child instanceof DepthLayout) {
                         boolean hasChangedBounds = ((DepthLayout) child).getDepthManager().calculateBounds();
                         if (hasChangedBounds)
-                            invalidate();
+                            view.invalidate();
                     }
                 }
                 return true;
@@ -84,35 +67,8 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
 
         shadowPaint.setColor(Color.BLACK);
         shadowPaint.setAntiAlias(true);
-        softShadow = (NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.shadow);
-        roundSoftShadow = ContextCompat.getDrawable(getContext(), R.drawable.round_soft_shadow);
-    }
-
-    @Override
-    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!isInEditMode()) {
-            if (child instanceof DepthLayout) {
-                final DepthLayout dl = (DepthLayout) child;
-                final CustomShadow customShadow = dl.getDepthManager().getCustomShadow();
-
-                final float[] src = new float[]{0, 0, dl.getWidth(), 0, dl.getWidth(), dl.getHeight(), 0, dl.getHeight()};
-                if (dl.getDepthManager().isCircle()) {
-                    customShadow.drawShadow(canvas, roundSoftShadow);
-                    if (Math.abs(dl.getRotationX()) > 1 || Math.abs(dl.getRotationY()) > 1) {
-                        drawCornerBaseShape(dl, canvas, src);
-                    }
-                } else {
-                    customShadow.drawShadow(canvas, softShadow);
-                    if (dl.getRotationX() != 0 || dl.getRotationY() != 0) {
-                        if (getLongestHorizontalEdge(dl) > getLongestVerticalEdge(dl))
-                            drawVerticalFirst(dl, canvas, src);
-                        else
-                            drawHorizontalFist(dl, canvas, src);
-                    }
-                }
-            }
-        }
-        return super.drawChild(canvas, child, drawingTime);
+        softShadow = (NinePatchDrawable) ContextCompat.getDrawable(view.getContext(), R.drawable.shadow);
+        roundSoftShadow = ContextCompat.getDrawable(view.getContext(), R.drawable.round_soft_shadow);
     }
 
     private void drawCornerBaseShape(DepthLayout dl, Canvas canvas, float[] src) {
@@ -253,8 +209,26 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
         canvas.restoreToCount(count);
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        return motionHandler.onTouchEvent(event);
+    public void drawChild(Canvas canvas, View child, long drawingTime) {
+        if (child instanceof DepthLayout) {
+            final DepthLayout dl = (DepthLayout) child;
+            final CustomShadow customShadow = dl.getDepthManager().getCustomShadow();
+
+            final float[] src = new float[]{0, 0, dl.getWidth(), 0, dl.getWidth(), dl.getHeight(), 0, dl.getHeight()};
+            if (dl.getDepthManager().isCircle()) {
+                customShadow.drawShadow(canvas, roundSoftShadow);
+                if (Math.abs(dl.getRotationX()) > 1 || Math.abs(dl.getRotationY()) > 1) {
+                    drawCornerBaseShape(dl, canvas, src);
+                }
+            } else {
+                customShadow.drawShadow(canvas, softShadow);
+                if (dl.getRotationX() != 0 || dl.getRotationY() != 0) {
+                    if (getLongestHorizontalEdge(dl) > getLongestVerticalEdge(dl))
+                        drawVerticalFirst(dl, canvas, src);
+                    else
+                        drawHorizontalFist(dl, canvas, src);
+                }
+            }
+        }
     }
 }
