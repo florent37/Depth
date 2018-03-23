@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Material 3D Showcase"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/colorPrimaryDark"/>
+
+    <com.github.florent37.depth.container.DepthContainerRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#B4E0E0"
+        >
+
+        <com.github.florent37.depth.view.DepthRelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            app:depth_elevation="10dp"
+            app:depth_edgeColor="#31BFD4"
+            app:depth_autoAnimate="true"
+            app:depth_value="30dp"
+            app:depth_zIndex="0">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/material" />
+
+        </com.github.florent37.depth.view.DepthRelativeLayout>
+    </com.github.florent37.depth.container.DepthContainerRelativeLayout>
+
+    <ScrollView
+        android:background="#B4E0E0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/fake_item"/>
+            <include layout="@layout/fake_item"/>
+            <include layout="@layout/fake_item"/>
+            <include layout="@layout/fake_item"/>
+            <include layout="@layout/fake_item"/>
+            <include layout="@layout/fake_item"/>
+            <include layout="@layout/fake_item"/>
+            <include layout="@layout/fake_item"/>
+            <include layout="@layout/fake_item"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

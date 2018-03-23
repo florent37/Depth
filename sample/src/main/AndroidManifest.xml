@@ -6,12 +6,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme.FullScreen">
 
         <activity
-            android:name=".fullscreen.FullScreenActivity"
-            android:theme="@style/AppTheme.FullScreen"
-            android:label="@string/app_name" >
+            android:name=".MainActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,12 +18,8 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".exitenter.RevertActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/app_name" >
-
-        </activity>
+        <activity android:name=".AutoAnimateActivity"/>
+        <activity android:name=".FollowUserInputActivity" />
 
     </application>
 

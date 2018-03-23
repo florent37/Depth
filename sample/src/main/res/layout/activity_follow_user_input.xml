@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/animation_list"
+    android:id="@+id/container">
+
+    <com.github.florent37.depth.container.DepthContainerRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.github.florent37.depth.view.DepthRelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            app:depth_elevation="30dp"
+            app:depth_value="25dp"
+            app:depth_zIndex="0">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/homer" />
+
+        </com.github.florent37.depth.view.DepthRelativeLayout>
+
+    </com.github.florent37.depth.container.DepthContainerRelativeLayout>
+</LinearLayout>

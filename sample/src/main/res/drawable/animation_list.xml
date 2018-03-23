@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/color1"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/color2"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/color3"
+        android:duration="5000" />
+    <item
+        android:drawable="@drawable/color4"
+        android:duration="5000" />
+</animation-list>

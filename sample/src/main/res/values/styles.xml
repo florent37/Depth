@@ -5,6 +5,7 @@
         <item name="colorAccent">@color/fab</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
     <!-- Base application theme. -->
