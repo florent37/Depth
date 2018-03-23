@@ -6,11 +6,11 @@ public interface DepthLayout {
 
     int getHeight();
 
-    CustomShadow getCustomShadow();
-
-    DepthRelativeLayout.DepthManager getDepthManager();
+    DepthManager getDepthManager();
 
     float getRotationY();
 
     float getRotationX();
+
+    void setDepth(float depth);
 }

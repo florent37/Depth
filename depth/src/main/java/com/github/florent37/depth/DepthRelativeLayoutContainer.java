@@ -95,7 +95,7 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
         if (!isInEditMode()) {
             if (child instanceof DepthLayout) {
                 final DepthLayout dl = (DepthLayout) child;
-                final CustomShadow customShadow = dl.getCustomShadow();
+                final CustomShadow customShadow = dl.getDepthManager().getCustomShadow();
 
                 final float[] src = new float[]{0, 0, dl.getWidth(), 0, dl.getWidth(), dl.getHeight(), 0, dl.getHeight()};
                 if (dl.getDepthManager().isCircle()) {
