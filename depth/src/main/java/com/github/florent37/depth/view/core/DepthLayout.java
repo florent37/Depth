@@ -13,4 +13,6 @@ public interface DepthLayout {
     float getRotationX();
 
     void setDepth(float depth);
+
+    void autoAnimate(boolean animate);
 }

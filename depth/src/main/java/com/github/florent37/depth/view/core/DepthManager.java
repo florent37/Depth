@@ -1,5 +1,8 @@
 package com.github.florent37.depth.view.core;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Outline;
@@ -10,6 +13,9 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 
 import com.github.florent37.depth.CustomShadow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DepthManager {
     public static final int DEFAULT_EDGE_COLOR = Color.WHITE;
@@ -25,36 +31,34 @@ public class DepthManager {
     public final PointF bottomRightBack = new PointF(0, 0);
 
     public final CustomShadow customShadow;
-
+    private final View view;
     public Paint edgePaint = new Paint();
     public float[] prevSrc = new float[8];
     public int depthIndex = 0;
     public float depth;
     public boolean isCircle = false;
 
-    private final View view;
-
     public DepthManager(View view) {
         this.view = view;
         customShadow = new CustomShadow(view);
     }
 
-    public void init(int edgeColor, boolean isCircle, float depth, int depthIndex, float elevation){
+    public void init(int edgeColor, boolean isCircle, float depth, int depthIndex, float elevation, boolean autoAnimate) {
         view.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         edgePaint.setColor(DEFAULT_EDGE_COLOR);
         edgePaint.setAntiAlias(true);
 
-        if(edgeColor != -1) {
+        if (edgeColor != -1) {
             this.edgePaint.setColor(edgeColor);
         }
         this.setIsCircle(isCircle);
-        if(depth != -1){
+        if (depth != -1) {
             this.setDepth(depth);
         } else {
             this.setDepth(DEFAULT_THICKNESS * view.getResources().getDisplayMetrics().density);
         }
-        if(depthIndex != -1) {
+        if (depthIndex != -1) {
             this.depthIndex = depthIndex;
         }
         setCustomShadowElevation(elevation);
@@ -67,6 +71,8 @@ public class DepthManager {
                 }
             });
         }
+
+        autoAnimate(autoAnimate);
     }
 
     public PointF getTopLeft() {
@@ -162,33 +168,64 @@ public class DepthManager {
         return depth;
     }
 
-    public Paint getEdgePaint() {
-        return edgePaint;
+    public void setDepth(float depth) {
+        this.depth = depth;
+        if (view.getParent() instanceof View) {
+            ((View) view.getParent()).invalidate();
+        }
     }
 
-    public int getDepthIndex() {
-        return depthIndex;
+    public Paint getEdgePaint() {
+        return edgePaint;
     }
 
     public void setEdgePaint(Paint edgePaint) {
         this.edgePaint = edgePaint;
     }
 
-    public CustomShadow getCustomShadow() {
-        return customShadow;
+    public int getDepthIndex() {
+        return depthIndex;
     }
 
-    public void setDepth(float depth) {
-        this.depth = depth;
-        if(view.getParent() instanceof View) {
-            ((View) view.getParent()).invalidate();
-        }
+    public CustomShadow getCustomShadow() {
+        return customShadow;
     }
 
     public void setCustomShadowElevation(float customShadowElevation) {
         this.customShadow.setCustomShadowElevation(customShadowElevation);
         if (view.getParent() instanceof View) {
             ((View) view.getParent()).invalidate();
+        }
+    }
+
+    private List<Animator> animators = new ArrayList<>();
+
+    public void autoAnimate(boolean animate) {
+        if(animate) {
+            view.post(new Runnable() {
+                @Override
+                public void run() {
+                    final ObjectAnimator rotationY = ObjectAnimator.ofFloat(view, View.ROTATION_Y, 25, 0, -25);
+                    rotationY.setDuration(1000);
+                    rotationY.setRepeatCount(ValueAnimator.INFINITE);
+                    rotationY.setRepeatMode(ValueAnimator.REVERSE);
+                    rotationY.start();
+
+                    animators.add(rotationY);
+
+                    final ObjectAnimator rotationX = ObjectAnimator.ofFloat(view, View.ROTATION_X, -25, 0, 25);
+                    rotationX.setDuration(2500);
+                    rotationX.setRepeatCount(ValueAnimator.INFINITE);
+                    rotationX.setRepeatMode(ValueAnimator.REVERSE);
+                    rotationX.start();
+
+                    animators.add(rotationX);
+                }
+            });
+        } else {
+            for (Animator animator : animators) {
+                animator.cancel();
+            }
         }
     }
 }

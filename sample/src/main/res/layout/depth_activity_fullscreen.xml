@@ -15,6 +15,7 @@
             android:layout_height="150dp"
             android:layout_centerInParent="true"
             app:depth_elevation="20dp"
+            app:depth_autoAnimate="true"
             app:depth_value="30dp"
             app:depth_zIndex="0">
 
@@ -39,6 +40,7 @@
             app:depth_elevation="10dp"
             app:depth_isCircle="false"
             app:depth_value="30dp"
+            app:depth_edgeColor="#444"
             app:depth_zIndex="0">
 
             <View
@@ -49,8 +51,8 @@
         </com.github.florent37.depth.view.DepthRelativeLayout>
 
         <com.github.florent37.depth.view.DepthRelativeLayout
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_centerInParent="true"
             app:depth_elevation="10dp"
             app:depth_isCircle="false"

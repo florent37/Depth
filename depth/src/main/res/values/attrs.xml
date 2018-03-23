@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="depth_autoAnimate" format="boolean"/>
     <attr name="depth_isCircle" format="boolean"/>
     <attr name="depth_edgeColor" format="color"/>
     <attr name="depth_value" format="dimension"/>
@@ -13,6 +14,7 @@
         <attr name="depth_value"/>
         <attr name="depth_elevation"/>
         <attr name="depth_zIndex"/>
+        <attr name="depth_autoAnimate"/>
     </declare-styleable>
 
     <declare-styleable name="DepthFrameLayout">
@@ -21,6 +23,7 @@
         <attr name="depth_value"/>
         <attr name="depth_elevation"/>
         <attr name="depth_zIndex"/>
+        <attr name="depth_autoAnimate"/>
     </declare-styleable>
 
     <declare-styleable name="DepthLinearLayout">
@@ -29,6 +32,7 @@
         <attr name="depth_value"/>
         <attr name="depth_elevation"/>
         <attr name="depth_zIndex"/>
+        <attr name="depth_autoAnimate"/>
     </declare-styleable>
 
 </resources>

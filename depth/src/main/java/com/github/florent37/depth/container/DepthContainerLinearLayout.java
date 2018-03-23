@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import com.github.florent37.depth.container.core.DepthContainerManager;
 import com.github.florent37.depth.container.core.DepthMotionHandler;
 
-public class DepthContainerLinearLayout extends LinearLayout {
+public class DepthContainerLinearLayout extends LinearLayout implements DepthLayoutContainer {
 
     private final DepthMotionHandler motionHandler;
 

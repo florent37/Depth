@@ -43,6 +43,7 @@ public class DepthFrameLayout extends FrameLayout implements DepthLayout {
         float depth = -1;
         int depthIndex = -1;
         float elevation = 0;
+        boolean autoAnimate = false;
 
         if (attrs != null) {
             final TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.DepthFrameLayout);
@@ -51,9 +52,10 @@ public class DepthFrameLayout extends FrameLayout implements DepthLayout {
             depth = arr.getDimension(R.styleable.DepthFrameLayout_depth_value, depth);
             depthIndex = arr.getInt(R.styleable.DepthFrameLayout_depth_zIndex, depthIndex);
             elevation = arr.getDimension(R.styleable.DepthFrameLayout_depth_elevation, elevation);
+            autoAnimate = arr.getBoolean(R.styleable.DepthFrameLayout_depth_autoAnimate, autoAnimate);
             arr.recycle();
         }
-        depthManager.init(edgeColor, isCircle, depth, depthIndex, elevation);
+        depthManager.init(edgeColor, isCircle, depth, depthIndex, elevation, autoAnimate);
 
     }
 
@@ -69,5 +71,10 @@ public class DepthFrameLayout extends FrameLayout implements DepthLayout {
     @Override
     public void setDepth(float depth) {
         this.depthManager.setDepth(depth);
+    }
+
+    @Override
+    public void autoAnimate(boolean animate) {
+        depthManager.autoAnimate(animate);
     }
 }

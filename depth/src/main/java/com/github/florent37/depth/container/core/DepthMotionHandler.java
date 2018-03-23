@@ -1,5 +1,7 @@
 package com.github.florent37.depth.container.core;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,7 +28,7 @@ public class DepthMotionHandler {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        if(view.getWidth() == 0 || view.getHeight() == 0){
+        if (view.getWidth() == 0 || view.getHeight() == 0) {
             return false;
         }
 
@@ -40,7 +42,7 @@ public class DepthMotionHandler {
 
                 break;
             }
-            case MotionEvent.ACTION_MOVE:{
+            case MotionEvent.ACTION_MOVE: {
                 final float translationX = x - clickedX;
                 final float translationY = y - clickedY;
 
@@ -73,10 +75,10 @@ public class DepthMotionHandler {
     }
 
     private int limit(int value, int min, int max) {
-        if(value > max){
+        if (value > max) {
             value = max;
         }
-        if(value < min){
+        if (value < min) {
             value = min;
         }
         return value;
