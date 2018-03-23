@@ -1,4 +1,4 @@
-package com.github.florent37.depth.container;
+package com.github.florent37.depth.container.core;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,7 +15,7 @@ import android.view.ViewTreeObserver;
 
 import com.gihub.florent37.depth.R;
 import com.github.florent37.depth.CustomShadow;
-import com.github.florent37.depth.depthview.DepthLayout;
+import com.github.florent37.depth.view.core.DepthLayout;
 
 public class DepthContainerManager {
     private final ViewGroup view;
@@ -47,7 +47,7 @@ public class DepthContainerManager {
         this.shadowAlpha = Math.min(1f, Math.max(0, shadowAlpha));
     }
 
-    void setup() {
+    public void setup() {
         view.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

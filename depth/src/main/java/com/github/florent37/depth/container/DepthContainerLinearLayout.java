@@ -6,7 +6,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+
+import com.github.florent37.depth.container.core.DepthContainerManager;
+import com.github.florent37.depth.container.core.DepthMotionHandler;
 
 public class DepthContainerLinearLayout extends LinearLayout {
 

@@ -1,6 +1,4 @@
-package com.github.florent37.depth.depthview;
-
-import com.github.florent37.depth.DepthManager;
+package com.github.florent37.depth.view.core;
 
 public interface DepthLayout {
 

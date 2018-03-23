@@ -2,24 +2,13 @@ package com.github.florent37.depth.container;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PointF;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.NinePatchDrawable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
-import com.gihub.florent37.depth.R;
-import com.github.florent37.depth.CustomShadow;
-import com.github.florent37.depth.depthview.DepthLayout;
+import com.github.florent37.depth.container.core.DepthContainerManager;
+import com.github.florent37.depth.container.core.DepthMotionHandler;
 
 public class DepthContainerRelativeLayout extends RelativeLayout {
 

@@ -30,7 +30,7 @@ public class CustomShadow {
     }
 
     public void setCustomShadowElevation(float customShadowElevation) {
-        this.customShadowElevation = customShadowElevation;
+        this.customShadowElevation = customShadowElevation * 3;
     }
 
     public boolean calculateBounds() {

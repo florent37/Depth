@@ -1,4 +1,4 @@
-package com.github.florent37.depth;
+package com.github.florent37.depth.view.core;
 
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -8,6 +8,8 @@ import android.graphics.PointF;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+
+import com.github.florent37.depth.CustomShadow;
 
 public class DepthManager {
     public static final int DEFAULT_EDGE_COLOR = Color.WHITE;

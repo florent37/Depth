@@ -1,22 +1,22 @@
-package com.github.florent37.depth.container;
+package com.github.florent37.depth.container.core;
 
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.florent37.depth.depthview.DepthLayout;
+import com.github.florent37.depth.view.core.DepthLayout;
 
 public class DepthMotionHandler {
     private final ViewGroup view;
 
-    float speedRotationX = 1.5f;
-    float speedRotationY = 1.5f;
+    float speedRotationX = 1.8f;
+    float speedRotationY = 1.8f;
 
-    int minRotationX = -45;
-    int maxRotationX = 45;
-    int minRotationY = -45;
-    int maxRotationY = 45;
+    int minRotationX = -50;
+    int maxRotationX = 50;
+    int minRotationY = -50;
+    int maxRotationY = 50;
 
     private Float clickedX;
     private Float clickedY;
@@ -52,7 +52,7 @@ public class DepthMotionHandler {
 
                         Log.d("Depth", "percentX :" + percentX);
 
-                        final int rotationY = (int) ((-1 * percentX * 90) * speedRotationY);
+                        final int rotationY = (int) ((percentX * 90) * speedRotationY);
                         final int rotationX = (int) ((-1 * percentY * 90) * speedRotationX);
 
                         childAt.setRotationY(limit(rotationY, minRotationY, maxRotationY));

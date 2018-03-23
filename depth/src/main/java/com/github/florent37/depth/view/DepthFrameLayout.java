@@ -1,4 +1,4 @@
-package com.github.florent37.depth.depthview;
+package com.github.florent37.depth.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,7 +6,8 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.gihub.florent37.depth.R;
-import com.github.florent37.depth.DepthManager;
+import com.github.florent37.depth.view.core.DepthManager;
+import com.github.florent37.depth.view.core.DepthLayout;
 
 public class DepthFrameLayout extends FrameLayout implements DepthLayout {
 
