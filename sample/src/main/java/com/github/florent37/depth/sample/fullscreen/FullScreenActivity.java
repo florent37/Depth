@@ -1,12 +1,9 @@
 package com.github.florent37.depth.sample.fullscreen;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
-import com.github.florent37.depth.DepthRelativeLayout;
+import com.github.florent37.depth.depthview.DepthRelativeLayout;
 import com.github.florent37.depth.sample.R;
 
 public class FullScreenActivity extends AppCompatActivity {
@@ -26,6 +23,7 @@ public class FullScreenActivity extends AppCompatActivity {
         depthLayout.setRotationX(-10);
         depthLayout.setRotationY(45);
 
+        /*
         final ObjectAnimator rotationY = ObjectAnimator.ofFloat(depthLayout, View.ROTATION_Y, 25, 0, -25);
         rotationY.setDuration(1000);
         rotationY.setRepeatCount(ValueAnimator.INFINITE);
@@ -37,6 +35,7 @@ public class FullScreenActivity extends AppCompatActivity {
         rotationX.setRepeatCount(ValueAnimator.INFINITE);
         rotationX.setRepeatMode(ValueAnimator.REVERSE);
         rotationX.start();
+        */
     }
 
 }

@@ -199,7 +199,7 @@
     </ScrollView>
 
 
-    <com.github.florent37.depth.DepthRelativeLayout
+    <com.github.florent37.depth.depthview.DepthRelativeLayout
         android:id="@+id/depth_view"
         android:layout_width="140dp"
         android:layout_height="140dp"
@@ -214,7 +214,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/sun"
             />
-    </com.github.florent37.depth.DepthRelativeLayout>
+    </com.github.florent37.depth.depthview.DepthRelativeLayout>
 
     <ImageView
         android:id="@+id/imageView"

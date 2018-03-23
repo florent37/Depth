@@ -1,4 +1,4 @@
-<com.github.florent37.depth.DepthRelativeLayoutContainer xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.florent37.depth.container.DepthRelativeLayoutContainer xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
 
     >
 
-    <com.github.florent37.depth.DepthRelativeLayout
+    <com.github.florent37.depth.depthview.DepthRelativeLayout
         android:id="@+id/root_dl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,10 +23,10 @@
             android:layout_height="180dp"
             android:background="@drawable/water_scene_background"
             />
-    </com.github.florent37.depth.DepthRelativeLayout>
+    </com.github.florent37.depth.depthview.DepthRelativeLayout>
 
 
-    <com.github.florent37.depth.DepthRelativeLayout
+    <com.github.florent37.depth.depthview.DepthRelativeLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/appbar_height"
@@ -65,7 +65,7 @@
             android:textSize="18sp"
             android:fitsSystemWindows="true"
             />
-    </com.github.florent37.depth.DepthRelativeLayout>
+    </com.github.florent37.depth.depthview.DepthRelativeLayout>
     <ImageView
         android:id="@+id/actionbar_shadow"
         android:layout_width="match_parent"
@@ -73,7 +73,7 @@
         android:layout_below="@+id/appbar"
         android:background="@drawable/actionbar_shadow"
         />
-    <com.github.florent37.depth.DepthRelativeLayout
+    <com.github.florent37.depth.depthview.DepthRelativeLayout
         android:id="@+id/dl2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,9 +139,9 @@
 
 
         </LinearLayout>
-    </com.github.florent37.depth.DepthRelativeLayout>
+    </com.github.florent37.depth.depthview.DepthRelativeLayout>
 
-    <com.github.florent37.depth.DepthRelativeLayout
+    <com.github.florent37.depth.depthview.DepthRelativeLayout
         android:id="@+id/dl3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -175,11 +175,11 @@ SDK. "
             android:textSize="14sp"
             />
 
-    </com.github.florent37.depth.DepthRelativeLayout>
+    </com.github.florent37.depth.depthview.DepthRelativeLayout>
 
 
 
-    <com.github.florent37.depth.DepthRelativeLayout
+    <com.github.florent37.depth.depthview.DepthRelativeLayout
         android:id="@+id/fab_container"
         android:layout_width="56dp"
         android:layout_height="56dp"
@@ -203,5 +203,5 @@ SDK. "
             app:rippleColor="@color/fab_highlight"
             android:layerType="hardware"
             />
-    </com.github.florent37.depth.DepthRelativeLayout>
-</com.github.florent37.depth.DepthRelativeLayoutContainer>
+    </com.github.florent37.depth.depthview.DepthRelativeLayout>
+</com.github.florent37.depth.container.DepthRelativeLayoutContainer>

@@ -15,4 +15,20 @@
         <attr name="depth_zIndex"/>
     </declare-styleable>
 
+    <declare-styleable name="DepthFrameLayout">
+        <attr name="depth_isCircle"/>
+        <attr name="depth_edgeColor"/>
+        <attr name="depth_value"/>
+        <attr name="depth_elevation"/>
+        <attr name="depth_zIndex"/>
+    </declare-styleable>
+
+    <declare-styleable name="DepthLinearLayout">
+        <attr name="depth_isCircle"/>
+        <attr name="depth_edgeColor"/>
+        <attr name="depth_value"/>
+        <attr name="depth_elevation"/>
+        <attr name="depth_zIndex"/>
+    </declare-styleable>
+
 </resources>

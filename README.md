@@ -78,12 +78,12 @@ Don't use `depth.setupFragment(`
 But manually create your own layout with `DepthRelativeLayoutContainer`and `DepthRelativeLayout`
 
 ```xml
-<com.github.florent37.depth.DepthRelativeLayoutContainer xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.florent37.depth.container.DepthRelativeLayoutContainer xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.github.florent37.depth.DepthRelativeLayout
+    <com.github.florent37.depth.depthview.DepthRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/status_bar"
@@ -115,9 +115,9 @@ But manually create your own layout with `DepthRelativeLayoutContainer`and `Dept
 
         </LinearLayout>
 
-    </com.github.florent37.depth.DepthRelativeLayout>
+    </com.github.florent37.depth.depthview.DepthRelativeLayout>
 
-    <com.github.florent37.depth.DepthRelativeLayout
+    <com.github.florent37.depth.depthview.DepthRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/status_bar"
@@ -140,9 +140,9 @@ But manually create your own layout with `DepthRelativeLayoutContainer`and `Dept
             app:bar_primaryColor="@color/colorPrimary"
             app:bar_primaryDarkColor="@color/colorPrimaryDark" />
 
-    </com.github.florent37.depth.DepthRelativeLayout>
+    </com.github.florent37.depth.depthview.DepthRelativeLayout>
 
-</com.github.florent37.depth.DepthRelativeLayoutContainer>
+</com.github.florent37.depth.container.DepthRelativeLayoutContainer>
 ```
 
 [![gif](https://raw.githubusercontent.com/florent37/Depth/master/media/revert.gif)](https://github.com/florent37/Depth)

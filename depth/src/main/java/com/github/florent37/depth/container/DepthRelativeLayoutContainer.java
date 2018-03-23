@@ -1,4 +1,4 @@
-package com.github.florent37.depth;
+package com.github.florent37.depth.container;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,18 +9,20 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
 import com.gihub.florent37.depth.R;
+import com.github.florent37.depth.CustomShadow;
+import com.github.florent37.depth.depthview.DepthLayout;
 
 public class DepthRelativeLayoutContainer extends RelativeLayout {
 
+    private final DepthMotionHandler motionHandler;
     private Matrix matrix = new Matrix();
     private Paint shadowPaint = new Paint();
     private NinePatchDrawable softShadow;
@@ -30,23 +32,19 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
 
     public DepthRelativeLayoutContainer(Context context) {
         super(context);
+        motionHandler = new DepthMotionHandler(this);
         setup();
-
     }
 
     public DepthRelativeLayoutContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
+        motionHandler = new DepthMotionHandler(this);
         setup();
     }
 
     public DepthRelativeLayoutContainer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setup();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public DepthRelativeLayoutContainer(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        motionHandler = new DepthMotionHandler(this);
         setup();
     }
 
@@ -253,5 +251,10 @@ public class DepthRelativeLayoutContainer extends RelativeLayout {
         drawRectangle(dl, canvas);
         drawShadow(dl.getDepthManager().getBottomLeft(), dl.getDepthManager().getBottomRight(), 0, canvas, dl);
         canvas.restoreToCount(count);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        return motionHandler.onTouchEvent(event);
     }
 }

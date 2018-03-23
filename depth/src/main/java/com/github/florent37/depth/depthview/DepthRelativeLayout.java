@@ -1,4 +1,4 @@
-package com.github.florent37.depth;
+package com.github.florent37.depth.depthview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 import com.gihub.florent37.depth.R;
+import com.github.florent37.depth.DepthManager;
 
 public class DepthRelativeLayout extends RelativeLayout implements DepthLayout {
 
